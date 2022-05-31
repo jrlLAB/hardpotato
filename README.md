@@ -1,5 +1,9 @@
 # Pytentiostat library
-Python libraries to control potentiostats from different companies.
+Python libraries to control the following potentiostats:
+
+* CHI760e
+
+More will be added soon.
 
 Authors:
 
@@ -8,6 +12,8 @@ Authors:
 * Joaquin Rodriguez-Lopez
 
 University of Illinois at Urbana-Champaign.
+
+Funded by JCESR.
 
 # Installation
 Clone the repository and from within the folder do:
