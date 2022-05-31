@@ -1,7 +1,7 @@
 # Pytentiostat library
 Python API to control the following potentiostats:
 
-* CHI760e
+* CHI760E from CH Instruments
 
 More will be added soon.
 
