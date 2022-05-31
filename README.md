@@ -1,5 +1,5 @@
 # Pytentiostat library
-Python libraries to control the following potentiostats:
+Python library to control the following potentiostats:
 
 * CHI760e
 
