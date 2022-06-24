@@ -99,7 +99,13 @@ class LSV(Technique):
             Technique.__init__(self, text=self.tech.text, fileName=fileName)
             self.technique = 'LSV'  
 
-
+class RealCA(Technique):
+    '''
+    Real chronoamp technique, not it curve
+    '''
+    def __init__(self):
+        pass
+    
 
 class CA(Technique):
     '''
