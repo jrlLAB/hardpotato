@@ -1,5 +1,5 @@
 import os
-import potentiostat.chi760e as chi
+import pytentiostat.chi760e as chi
 
 # Potentiostat models available: chi760e
 

@@ -1,5 +1,5 @@
 import numpy as np
-import potentiostats.chi760e as chi
+import pytentiostat.chi760e as chi
 
 
 class Test:
