@@ -65,8 +65,8 @@ class LSV:
 ###above techniques use path_lib, below use path_exe###
 
 class NPV(Technique):
-    def __init__(self, Eini, Efin, dE, tsample, twidth, tperiod, sens, qt=0,
-                 path_exe, folder, fileName, header):
+    def __init__(self, Eini, Efin, dE, tsample, twidth, tperiod, sens,
+                 path_exe, folder, fileName, header, qt=0):
         self.fileName = fileName
         self.folder = folder
         self.text = ''
