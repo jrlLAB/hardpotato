@@ -62,11 +62,10 @@ class LSV:
         self.foot = '\n forcequit: yesiamsure\n'
         self.text = self.head + self.body2 + self.foot
 
-###above techniques use path_lib, below use path_exe###
 
 class NPV():
     def __init__(self, Eini, Efin, dE, tsample, twidth, tperiod, sens,
-                 path_exe, folder, fileName, header, qt=0):
+                 path_lib, folder, fileName, header, qt=0):
         self.fileName = fileName
         self.folder = folder
         self.text = ''
@@ -86,7 +85,7 @@ class IT:
     '''
     '''
     def __init__(self, Estep, dt, ttot, sens, folder, fileName, header, 
-                 path_exe, qt=2):
+                 path_lib, qt=2):
         self.fileName = fileName
         self.folder = folder
         self.text = ''
@@ -113,7 +112,7 @@ class OCP:
     '''
         Assumes OCP is between +- 10 V
     '''
-    def __init__(self, ttot, dt, folder, fileName, header, path_exe):
+    def __init__(self, ttot, dt, folder, fileName, header, path_lib):
         self.fileName = fileName
         self.folder = folder
         self.text = ''
