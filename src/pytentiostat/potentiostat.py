@@ -6,16 +6,16 @@ import pytentiostat.chi760e as chi
 # Global variables
 folder_save = '.'
 model_pstat = 'no pstat'
-path = '.'
+path_lib = '.'
 
 class Setup:
-    def __init__(self, model=0, path_exe='.', folder='.', verbose=1):
+    def __init__(self, model=0, path='.', folder='.', verbose=1):
         global folder_save
         folder_save = folder
         global model_pstat
         model_pstat = model
         global path
-        path = path_exe
+        path_lib = path
         if verbose:
             self.info()
 
@@ -49,7 +49,7 @@ class Technique:
             # Write macro:
             self.writeToFile()
             # Run command:
-            command = path + '/chi760e.exe'
+            command = path_lib + '/chi760e.exe'
             param = ' /runmacro:\"' + folder_save + '/' + self.fileName + '.mcr\"'
             os.system(command + param)
             self.message(start=False)
@@ -82,7 +82,7 @@ class CV(Technique):
                  fileName='CV', header='CV'):
         if model_pstat == 'chi760e':
             self.tech = chi.CV(Eini, Ev1, Ev2, Efin, sr, dE, nSweeps, sens,
-                          folder_save, fileName, header, path, qt=2)
+                          folder_save, fileName, header, path_lib, qt=2)
             Technique.__init__(self, text=self.tech.text, fileName=fileName)
             self.technique = 'CV'
             print('CV')
@@ -94,7 +94,7 @@ class NPV(Technique):
                  fileName='NPV', header='NPV performed with CHI760'):
         if model_pstat == 'chi760e':
             self.tech = chi.NPV(Eini, Efin, dE, tsample, twidth, tperiod, sens,
-                         folder_save, fileName, header, path, qt=0)
+                         folder_save, fileName, header, path_lib, qt=0)
             Technique.__init__(self, text=self.tech.text, fileName=fileName)
             self.technique = 'NPV'
             print('NPV')
@@ -109,7 +109,7 @@ class LSV(Technique):
                  fileName='LSV', header='LSV'):
         if model_pstat == 'chi760e':
             self.tech = chi.LSV(Eini, Efin, sr, dE, sens, folder_save, fileName, 
-                                header, path, qt=2)
+                                header, path_lib, qt=2)
             Technique.__init__(self, text=self.tech.text, fileName=fileName)
             self.technique = 'LSV'  
 
@@ -120,8 +120,8 @@ class IT(Technique):
     def __init__(self, Estep=0.2, dt=0.001, ttot=2, sens=1e-6,
                  fileName='IT', header='IT'):
         if model_pstat == 'chi760e':
-            self.tech = chi.IT(Estep, dt, tstep, sens, folder_save, fileName,
-                               header, path, qt=2)
+            self.tech = chi.IT(Estep, dt, ttot, sens, folder_save, fileName,
+                               header, path_lib, qt=2)
             Technique.__init__(self, text=self.tech.text, fileName=fileName)
             self.technique = 'IT'
 
@@ -132,7 +132,7 @@ class OCP(Technique):
     '''
     def __init__(self, ttot=2, dt=0.01, fileName='OCP', header='OCP'):
         if model_pstat == 'chi760e':
-            self.tech = chi.OCP(ttot, dt, folder_save, fileName, header, path)
+            self.tech = chi.OCP(ttot, dt, folder_save, fileName, header, path_lib)
             Technique.__init__(self, text=self.tech.text, fileName=fileName)
             self.technique = 'OCP'
 
