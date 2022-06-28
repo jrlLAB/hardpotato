@@ -62,9 +62,27 @@ class LSV:
         self.foot = '\n forcequit: yesiamsure\n'
         self.text = self.head + self.body2 + self.foot
 
+###above techniques use path_lib, below use path_exe###
+
+class NPV(Technique):
+    def __init__(self, Eini, Efin, dE, tsample, twidth, tperiod, sens, qt=0,
+                 path_exe, folder, fileName, header):
+        self.fileName = fileName
+        self.folder = folder
+        self.text = ''
+        self.head = 'C\x02\0\0\nfolder: ' + folder + '\n' + fileOverride + \
+                    'header: ' + header + '\n\n'
+        self.body = 'tech=NPV\nei=' + str(Eini) + '\nef=' + str(Efin) + \
+                    '\nincre=' + str(dE) + '\npw=' + str(tsample) + \
+                    '\nsw=' + str(twidth) + '\nprod=' + str(tperiod) + \
+                    '\nqt=' + str(qt) + '\nsens=' + str(sens)
+        self.body = self.body + \
+                    '\nrun\nsave:' + fileName + '\ntsave:' + fileName 
+        self.foot = '\n forcequit: yesiamsure\n'
+        self.text = self.head + self.body + self.foot
 
 
-class CA:
+class IT:
     '''
     '''
     def __init__(self, Estep, dt, ttot, sens, folder, fileName, header, 

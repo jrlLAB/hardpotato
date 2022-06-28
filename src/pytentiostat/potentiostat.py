@@ -87,7 +87,21 @@ class CV(Technique):
             self.technique = 'CV'
             print('CV')
 
-   
+class NPV(Technique):
+    '''
+    '''
+    def __init__(self, Eini=0.5, Efin=-0.5, dE=0.01, tsample=0.1, twidth=0.05, tperiod=10, sens=1e-6,
+                 fileName='NPV', header='NPV performed with CHI760'):
+        if model_pstat == 'chi760e':
+            self.tech = chi.NPV(Eini, Efin, dE, tsample, twidth, tperiod, sens,
+                         folder_save, fileName, header, path, qt=0)
+            Technique.__init__(self, text=self.tech.text, fileName=fileName)
+            self.technique = 'NPV'
+            print('NPV')
+
+    
+
+
 class LSV(Technique):
     '''
     '''
@@ -99,24 +113,17 @@ class LSV(Technique):
             Technique.__init__(self, text=self.tech.text, fileName=fileName)
             self.technique = 'LSV'  
 
-class RealCA(Technique):
-    '''
-    Real chronoamp technique, not it curve
-    '''
-    def __init__(self):
-        pass
-    
 
-class CA(Technique):
+class IT(Technique):
     '''
     '''
     def __init__(self, Estep=0.2, dt=0.001, ttot=2, sens=1e-6,
-                 fileName='CA', header='CA'):
+                 fileName='IT', header='IT'):
         if model_pstat == 'chi760e':
-            self.tech = chi.CA(Estep, dt, tstep, sens, folder_save, fileName,
+            self.tech = chi.IT(Estep, dt, tstep, sens, folder_save, fileName,
                                header, path, qt=2)
             Technique.__init__(self, text=self.tech.text, fileName=fileName)
-            self.technique = 'CA'
+            self.technique = 'IT'
 
 
 
