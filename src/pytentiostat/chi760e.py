@@ -7,7 +7,7 @@ class Test:
 
 class CV:
     def __init__(self, Eini, Ev1, Ev2, Efin, sr, dE, nSweeps, sens, 
-                 folder, fileName, header, path_lib, qt=2):
+                 folder, fileName, header, path_lib, qt=2, resistance=0):
         self.fileName = fileName
         self.folder = folder
         self.text = '' 
@@ -30,8 +30,13 @@ class CV:
                     str(el) + '\npn=' + pn + '\ncl=' + str(nSweeps) + \
                     '\nefon\nef=' + str(Efin) + '\nsi=' + str(dE) + \
                     '\nqt=' + str(qt) + '\nv=' + str(sr) + '\nsens=' + str(sens)
-        self.body2 = self.body + \
-                    '\nrun\nsave:' + self.fileName + '\ntsave:' + self.fileName 
+        if resistance: # In case IR compensation is required
+            self.body2 = self.body + '\nmir=' + str(resistance) + \
+                         '\nircompon\nrun\nircompoff\nsave:' + self.fileName + \
+                         '\ntsave:' + self.fileName
+        else:
+            self.body2 = self.body + '\nrun\nsave:' + self.fileName + \
+                         '\ntsave:' + self.fileName 
         self.foot = '\n forcequit: yesiamsure\n'
         self.text = self.head + self.body2 + self.foot
 

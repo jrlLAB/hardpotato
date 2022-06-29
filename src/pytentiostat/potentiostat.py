@@ -82,13 +82,17 @@ class Technique:
 
 class CV(Technique):
     '''
+        resistance = ## in ohms in case manual IR compensation is required
+        this option is not tested yet and it is only implemented in CV,
+        if it works it will be implemented in other techniques
     '''
     def __init__(self, Eini=-0.2, Ev1=0.2, Ev2=-0.2, Efin=-0.2, sr=0.1,
-                 dE=0.001, nSweeps=2, sens=1e-6, 
+                 dE=0.001, nSweeps=2, sens=1e-6, resistance=0,
                  fileName='CV', header='CV'):
         if model_pstat == 'chi760e':
             self.tech = chi.CV(Eini, Ev1, Ev2, Efin, sr, dE, nSweeps, sens,
-                          folder_save, fileName, header, path_lib, qt=2)
+                               folder_save, fileName, header, path_lib, qt=2, 
+                               resistance=resistance)
             Technique.__init__(self, text=self.tech.text, fileName=fileName)
             self.technique = 'CV'
             print('CV')
