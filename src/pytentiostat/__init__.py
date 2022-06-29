@@ -4,9 +4,10 @@ pytentiostat library
 """
 
 from .potentiostat import *
-from .file import *
+from .load_data import *
 
 __version__ = "0.0.2"
 __author__ = 'Oliver Rodriguez'
 
-__all__ = ['pytentiostat', 'chi760e', 'file']
+# modules to import when user does 'from pytentiostat import *':
+__all__ = ['potentiostat', 'load_data' ]
