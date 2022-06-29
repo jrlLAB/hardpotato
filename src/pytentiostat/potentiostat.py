@@ -8,13 +8,19 @@ folder_save = '.'
 model_pstat = 'no pstat'
 path_lib = '.'
 
+class Test:
+    '''
+    '''
+    def __init__(self):
+        print('Test from potentiostat library')
+
 class Setup:
     def __init__(self, model=0, path='.', folder='.', verbose=1):
         global folder_save
         folder_save = folder
         global model_pstat
         model_pstat = model
-        global path
+        global path_lib
         path_lib = path
         if verbose:
             self.info()

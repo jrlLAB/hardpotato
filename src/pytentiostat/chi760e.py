@@ -1,3 +1,10 @@
+class Test:
+    '''
+    '''
+    def __init__(self):
+        print('Test from chi760e module')
+
+
 class CV:
     def __init__(self, Eini, Ev1, Ev2, Efin, sr, dE, nSweeps, sens, 
                  folder, fileName, header, path_lib, qt=2):
