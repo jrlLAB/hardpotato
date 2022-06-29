@@ -133,10 +133,21 @@ class OCP:
 
 
 
-class Read:
+class EIS:
     '''
     '''
-    def __init__(self, fileName, folder):
+    def __init__(self, Eini, low_freq, high_freq, amplitude, sens, qt, folder, 
+                 fileName, header, path_lib):
         self.fileName = fileName
         self.folder = folder
+        self.text = ''
+        self.head = 'C\x02\0\0\nfolder: ' + folder + '\nfileoverride\n' + \
+                    'header: ' + header + '\n\n'
+        self.body = 'tech=imp\nei=' + str(Eini) + '\nfl=' + str(low_freq) + \
+                    '\nfh=' + str(high_freq) + '\namp=' + str(amplitude) + \
+                    '\nsens=' + str(sens) + '\nqt=' + str(qt) + \
+                    '\nrun\nsave:' + self.fileName + '\ntsave:' + self.fileName 
+        self.foot = '\nforcequit: yesiamsure\n'
+        self.text = self.head + self.body + self.foot
+
 

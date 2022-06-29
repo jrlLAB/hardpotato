@@ -28,7 +28,7 @@ class Setup:
     def info(self):
         print('\n----------')
         print('Potentiostat model: ' + model_pstat)
-        print('Potentiostat path: ' + path)
+        print('Potentiostat path: ' + path_lib)
         print('Save folder: ' + folder_save)
         print('----------\n')
 
@@ -38,7 +38,7 @@ class Technique:
     '''
 
     def __init__(self, text='', fileName='CV'):
-        self.text = text
+        self.text = text # text to write as macro
         self.fileName = fileName
         self.technique = 'Technique'
         self.bpot = False
@@ -71,13 +71,13 @@ class Technique:
             print(self.technique + ' finished\n----------\n')
 
     def bipot(self, E=-0.5, sens=1e-6):
-        if self.technique != 'OCP':
+        if self.technique != 'OCP' and self.technique != 'EIS':
             if model_pstat == 'chi760e':
                 self.tech.bipot(E, sens)
                 self.text = self.tech.text
                 self.bpot = True
         else:
-            print('OCP does not have bipotentiostat mode')
+            print(self.technique + ' does not have bipotentiostat mode')
      
 
 class CV(Technique):
@@ -141,6 +141,18 @@ class OCP(Technique):
             self.tech = chi.OCP(ttot, dt, folder_save, fileName, header, path_lib)
             Technique.__init__(self, text=self.tech.text, fileName=fileName)
             self.technique = 'OCP'
+
+
+class EIS(Technique):
+    '''
+    '''
+    def __init__(self, Eini=0, low_freq=1, high_freq=1000, amplitude=0.01, 
+                 sens=1e-6, qt=0, fileName='EIS', header='EIS'):
+        if model_pstat == 'chi760e':
+            self.tech = chi.EIS(Eini, low_freq, high_freq, amplitude, sens, qt, 
+                                folder_save, fileName, header, path_lib)
+            Technique.__init__(self, text=self.tech.text, fileName=fileName)
+            self.technique = 'EIS'
 
 
 
