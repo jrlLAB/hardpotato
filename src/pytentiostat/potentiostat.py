@@ -28,7 +28,7 @@ class Setup:
     def info(self):
         print('\n----------')
         print('Potentiostat model: ' + model_pstat)
-        print('Potentiostat path: ' + path)
+        print('Potentiostat path: ' + path_lib)
         print('Save folder: ' + folder_save)
         print('----------\n')
 
@@ -38,7 +38,7 @@ class Technique:
     '''
 
     def __init__(self, text='', fileName='CV'):
-        self.text = text
+        self.text = text # text to write as macro
         self.fileName = fileName
         self.technique = 'Technique'
         self.bpot = False
@@ -71,24 +71,28 @@ class Technique:
             print(self.technique + ' finished\n----------\n')
 
     def bipot(self, E=-0.5, sens=1e-6):
-        if self.technique != 'OCP':
+        if self.technique != 'OCP' and self.technique != 'EIS':
             if model_pstat == 'chi760e':
                 self.tech.bipot(E, sens)
                 self.text = self.tech.text
                 self.bpot = True
         else:
-            print('OCP does not have bipotentiostat mode')
+            print(self.technique + ' does not have bipotentiostat mode')
      
 
 class CV(Technique):
     '''
+        resistance = ## in ohms in case manual IR compensation is required
+        this option is not tested yet and it is only implemented in CV,
+        if it works it will be implemented in other techniques
     '''
     def __init__(self, Eini=-0.2, Ev1=0.2, Ev2=-0.2, Efin=-0.2, sr=0.1,
-                 dE=0.001, nSweeps=2, sens=1e-6, 
+                 dE=0.001, nSweeps=2, sens=1e-6, resistance=0,
                  fileName='CV', header='CV'):
         if model_pstat == 'chi760e':
             self.tech = chi.CV(Eini, Ev1, Ev2, Efin, sr, dE, nSweeps, sens,
-                          folder_save, fileName, header, path_lib, qt=2)
+                               folder_save, fileName, header, path_lib, qt=2, 
+                               resistance=resistance)
             Technique.__init__(self, text=self.tech.text, fileName=fileName)
             self.technique = 'CV'
             print('CV')
@@ -141,6 +145,18 @@ class OCP(Technique):
             self.tech = chi.OCP(ttot, dt, folder_save, fileName, header, path_lib)
             Technique.__init__(self, text=self.tech.text, fileName=fileName)
             self.technique = 'OCP'
+
+
+class EIS(Technique):
+    '''
+    '''
+    def __init__(self, Eini=0, low_freq=1, high_freq=1000, amplitude=0.01, 
+                 sens=1e-6, qt=0, fileName='EIS', header='EIS'):
+        if model_pstat == 'chi760e':
+            self.tech = chi.EIS(Eini, low_freq, high_freq, amplitude, sens, qt, 
+                                folder_save, fileName, header, path_lib)
+            Technique.__init__(self, text=self.tech.text, fileName=fileName)
+            self.technique = 'EIS'
 
 
 

@@ -8,7 +8,7 @@ pytentiostat library
 from . import potentiostat
 from . import load_data
 
-__version__ = "0.0.2"
+__version__ = "0.0.3"
 __author__ = 'Oliver Rodriguez'
 
 # modules to import when user does 'from pytentiostat import *':

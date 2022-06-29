@@ -46,7 +46,7 @@ class Read:
 
 
 
-class LoadXY(Read):
+class XY(Read):
     '''
     '''
     def __init__(self, fileName='file', folder='.', skiprows=0, delimiter=',',
@@ -59,7 +59,7 @@ class LoadXY(Read):
         self.read()
 
 
-class LoadCV(Read):
+class CV(Read):
     '''
     '''
     def __init__(self, fileName='file', folder='.', model=0):
@@ -72,16 +72,16 @@ class LoadCV(Read):
         self.i = self.y
 
 
-class LoadLSV(Read):
+class LSV(Read):
     '''
     '''
     def __init__(self, fileName='file', folder='.', model=0):
-        cv = LoadCV(fileName, folder, model) # Same as CV
+        cv = CV(fileName, folder, model) # Same as CV
         self.E = cv.E
         self.i = cv.i
 
 
-class LoadCA(Read):
+class CA(Read):
     '''
     '''
     def __init__(self, fileName='file', folder='.', model=0):
@@ -94,10 +94,10 @@ class LoadCA(Read):
         self.i = self.y
 
 
-class LoadOCP(Read):
+class OCP(Read):
     '''
     '''
     def __init__(self, fileName='file', folder='.', model=0):
-        ca = LoadCA(fileName, folder, model) # Same as CA
+        ca = CA(fileName, folder, model) # Same as CA
         self.t = ca.t
         self.E = ca.i

@@ -7,7 +7,7 @@ class Test:
 
 class CV:
     def __init__(self, Eini, Ev1, Ev2, Efin, sr, dE, nSweeps, sens, 
-                 folder, fileName, header, path_lib, qt=2):
+                 folder, fileName, header, path_lib, qt=2, resistance=0):
         self.fileName = fileName
         self.folder = folder
         self.text = '' 
@@ -30,8 +30,13 @@ class CV:
                     str(el) + '\npn=' + pn + '\ncl=' + str(nSweeps) + \
                     '\nefon\nef=' + str(Efin) + '\nsi=' + str(dE) + \
                     '\nqt=' + str(qt) + '\nv=' + str(sr) + '\nsens=' + str(sens)
-        self.body2 = self.body + \
-                    '\nrun\nsave:' + self.fileName + '\ntsave:' + self.fileName 
+        if resistance: # In case IR compensation is required
+            self.body2 = self.body + '\nmir=' + str(resistance) + \
+                         '\nircompon\nrun\nircompoff\nsave:' + self.fileName + \
+                         '\ntsave:' + self.fileName
+        else:
+            self.body2 = self.body + '\nrun\nsave:' + self.fileName + \
+                         '\ntsave:' + self.fileName 
         self.foot = '\n forcequit: yesiamsure\n'
         self.text = self.head + self.body2 + self.foot
 
@@ -133,10 +138,21 @@ class OCP:
 
 
 
-class Read:
+class EIS:
     '''
     '''
-    def __init__(self, fileName, folder):
+    def __init__(self, Eini, low_freq, high_freq, amplitude, sens, qt, folder, 
+                 fileName, header, path_lib):
         self.fileName = fileName
         self.folder = folder
+        self.text = ''
+        self.head = 'C\x02\0\0\nfolder: ' + folder + '\nfileoverride\n' + \
+                    'header: ' + header + '\n\n'
+        self.body = 'tech=imp\nei=' + str(Eini) + '\nfl=' + str(low_freq) + \
+                    '\nfh=' + str(high_freq) + '\namp=' + str(amplitude) + \
+                    '\nsens=' + str(sens) + '\nqt=' + str(qt) + \
+                    '\nrun\nsave:' + self.fileName + '\ntsave:' + self.fileName 
+        self.foot = '\nforcequit: yesiamsure\n'
+        self.text = self.head + self.body + self.foot
+
 

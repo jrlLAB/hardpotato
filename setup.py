@@ -2,9 +2,9 @@ from setuptools import setup, find_packages
 
 setup(
     name='pytentiostat',
-    version='0.0.2',
+    version='0.0.3',
     author='Oliver Rodriguez',
-    author_email='oliverrz@illinois.edu',
+    author_email='oliver.rdz@softpotato.xyz',
     packages=find_packages('src'),
     package_dir={'':'src'},
     url='https://github.com/jrlLAB/pytentiostat',
