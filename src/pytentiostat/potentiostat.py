@@ -12,7 +12,7 @@ class Test:
     '''
     '''
     def __init__(self):
-        print('Test from potentiostat library')
+        print('Test from potentiostat module')
 
 class Setup:
     def __init__(self, model=0, path='.', folder='.', verbose=1):

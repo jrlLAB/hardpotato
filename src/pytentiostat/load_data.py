@@ -6,7 +6,7 @@ class Test:
     '''
     '''
     def __init__(self):
-        print('Test from file library')
+        print('Test from load_data module')
 
 class Read:
     '''
