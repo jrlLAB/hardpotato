@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='pytentiostat',
-    version='0.0.4',
+    version='1.0.0',
     author='Oliver Rodriguez',
     author_email='oliver.rdz@softpotato.xyz',
     packages=find_packages('src'),
