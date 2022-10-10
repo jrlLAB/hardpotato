@@ -1,7 +1,4 @@
-# IMPORTANT NOTE
-The library will change name soon because pytentiostat is taken in pypi. This will be done so as to allow installation via pip.
-
-# Pytentiostat library
+# Pypotato library
 Python API to control the following potentiostats:
 
 * CHI760E from CH Instruments
