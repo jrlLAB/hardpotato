@@ -1,5 +1,5 @@
 import numpy as np
-import pytentiostat.chi760e as chi
+import pypotato.chi760e as chi
 
 
 class Test:
