@@ -18,7 +18,7 @@ Funded by JCESR.
 # Installation
 Clone the repository and from within the folder do:
 ```python
-pip install .
+pip install pypotato
 ```
 
 # Requirements
