@@ -15,7 +15,7 @@ class Read:
         self.file_path = self.folder + '/' + self.fileName
 
     def read(self, text=0, model=0):
-        if model == 'chi760e':
+        if model[0:3] == 'chi':
             self.delimiter = ','
             self.skiprows = self.search(text)
             if self.skiprows:

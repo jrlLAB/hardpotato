@@ -2,7 +2,7 @@ class Test:
     '''
     '''
     def __init__(self):
-        print('Test from chi760e module')
+        print('Test from chi1205b module')
 
 
 class CV:
@@ -21,7 +21,7 @@ class CV:
             eh = Ev2
             el = Ev1
             pn = 'n'
-        nSweeps = nSweeps + 1 # final e from chi is enabled by default
+        #nSweeps = nSweeps + 1 # final e from chi is enabled by default
 
         # building macro:
         self.head = 'c\x02\0\0\nfolder: ' + folder + '\nfileoverride\n' + \
@@ -37,13 +37,6 @@ class CV:
         else:
             self.body2 = self.body + '\nrun\nsave:' + self.fileName + \
                          '\ntsave:' + self.fileName 
-        self.foot = '\n forcequit: yesiamsure\n'
-        self.text = self.head + self.body2 + self.foot
-
-    def bipot(self, E2, sens2):
-        self.body2 = self.body + \
-                    '\ne2=' + str(E2) + '\nsens2=' + str(sens2) + '\ni2on' + \
-                    '\nrun\nsave:' + self.fileName + '\ntsave:' + self.fileName 
         self.foot = '\n forcequit: yesiamsure\n'
         self.text = self.head + self.body2 + self.foot
 
@@ -67,31 +60,6 @@ class LSV:
         self.foot = '\n forcequit: yesiamsure\n'
         self.text = self.head + self.body2 + self.foot
 
-    def bipot(self, E2, sens2):
-        self.body2 = self.body + \
-                    '\ne2=' + str(E2) + '\nsens2=' + str(sens2) + '\ni2on' + \
-                    '\nrun\nsave:' + self.fileName + '\ntsave:' + self.fileName 
-        self.foot = '\n forcequit: yesiamsure\n'
-        self.text = self.head + self.body2 + self.foot
-
-
-class NPV():
-    def __init__(self, Eini, Efin, dE, tsample, twidth, tperiod, sens,
-                 path_lib, folder, fileName, header, qt=0):
-        self.fileName = fileName
-        self.folder = folder
-        self.text = ''
-        self.head = 'C\x02\0\0\nfolder: ' + folder + '\n' + fileOverride + \
-                    'header: ' + header + '\n\n'
-        self.body = 'tech=NPV\nei=' + str(Eini) + '\nef=' + str(Efin) + \
-                    '\nincre=' + str(dE) + '\npw=' + str(tsample) + \
-                    '\nsw=' + str(twidth) + '\nprod=' + str(tperiod) + \
-                    '\nqt=' + str(qt) + '\nsens=' + str(sens)
-        self.body = self.body + \
-                    '\nrun\nsave:' + fileName + '\ntsave:' + fileName 
-        self.foot = '\n forcequit: yesiamsure\n'
-        self.text = self.head + self.body + self.foot
-
 
 class CA:
     '''
@@ -111,14 +79,6 @@ class CA:
         self.foot = '\n forcequit: yesiamsure\n'
         self.text = self.head + self.body2 + self.foot
 
-    def bipot(self, E2, sens2):
-        self.body2 = self.body + \
-                    '\ne2=' + str(E2) + '\nsens2=' + str(sens2) + '\ni2on' + \
-                    '\nrun\nsave:' + self.fileName + '\ntsave:' + self.fileName 
-        self.foot = '\n forcequit: yesiamsure\n'
-        self.text = self.head + self.body2 + self.foot
-
-
 
 class OCP:
     '''
@@ -130,29 +90,9 @@ class OCP:
         self.text = ''
         self.head = 'C\x02\0\0\nfolder: ' + folder + '\nfileoverride\n' + \
                     'header: ' + header + '\n\n'
-        self.body = 'tech=ocpt\nst=' + str(ttot) + '\neh=10' + \
-                    '\nel=-10' + '\nsi=' + str(dt) + \
+        self.body = 'tech=ocpt\nst=' + str(ttot) + '\neh=5' + \
+                    '\nel=-5' + '\nsi=' + str(dt) + \
                     '\nrun\nsave:' + self.fileName + '\ntsave:' + self.fileName 
         self.foot = '\nforcequit: yesiamsure\n'
         self.text = self.head + self.body + self.foot
-
-
-
-class EIS:
-    '''
-    '''
-    def __init__(self, Eini, low_freq, high_freq, amplitude, sens, qt, folder, 
-                 fileName, header, path_lib):
-        self.fileName = fileName
-        self.folder = folder
-        self.text = ''
-        self.head = 'C\x02\0\0\nfolder: ' + folder + '\nfileoverride\n' + \
-                    'header: ' + header + '\n\n'
-        self.body = 'tech=imp\nei=' + str(Eini) + '\nfl=' + str(low_freq) + \
-                    '\nfh=' + str(high_freq) + '\namp=' + str(amplitude) + \
-                    '\nsens=' + str(sens) + '\nqt=' + str(qt) + \
-                    '\nrun\nsave:' + self.fileName + '\ntsave:' + self.fileName 
-        self.foot = '\nforcequit: yesiamsure\n'
-        self.text = self.head + self.body + self.foot
-
 
