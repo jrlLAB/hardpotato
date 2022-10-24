@@ -1,4 +1,7 @@
 from pypotato import *
+import numpy as np
+import matplotlib.pyplot as plt
+import softpotato as sp
 
 # Select the potentiostat model to use:
 model = 'chi1205b'
@@ -16,19 +19,23 @@ Eini = -0.5     # V, initial potential
 Ev1 = 0.5       # V, first vertex potential
 Ev2 = -0.5      # V, second vertex potential
 Efin = -0.5     # V, final potential
-sr = 1          # V/s, scan rate
 dE = 0.001      # V, potential increment
 nSweeps = 2     # number of sweeps
 sens = 1e-6     # A/V, current sensitivity
 E2 = 0.5        # V, potential of the second working electrode
 sens2 = 1e-9    # A/V, current sensitivity of the second working electrode
-fileName = 'CV' # base file name for data file
 header = 'CV'   # header for data file
 
-# initialize experiment:
-cv = potentiostat.CV(Eini, Ev1,Ev2, Efin, sr, dE, nSweeps, sens, fileName, header)
-# Include second working electrode in bipotentiostat mode.
-# Comment or delete the next line to remove bipot mode.
-#cv.bipot(E2,sens2)
-# Run experiment:
-cv.run()
+sr = np.array([0.2, 0.5, 1])          # V/s, scan rate
+nsr = sr.size
+
+for x in range(nsr):
+    # initialize experiment:
+    fileName = 'CV_' + str(int(sr[x]*1000)) + 'mVs'# base file name for data file
+    print(fileName)
+    cv = potentiostat.CV(Eini, Ev1,Ev2, Efin, sr, dE, nSweeps, sens, fileName, header)
+    # Include second working electrode in bipotentiostat mode.
+    # Comment or delete the next line to remove bipot mode.
+    #cv.bipot(E2,sens2)
+    # Run experiment:
+    cv.run()
