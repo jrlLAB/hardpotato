@@ -55,7 +55,7 @@ class Technique:
             # Write macro:
             self.writeToFile()
             # Run command:
-            command = path_lib + '/chi760e.exe'
+            command = path_lib #+ '/chi760e.exe'
             param = ' /runmacro:\"' + folder_save + '/' + self.fileName + '.mcr\"'
             os.system(command + param)
             self.message(start=False)
