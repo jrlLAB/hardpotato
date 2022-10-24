@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='pypotato',
-    version='1.1.1',
+    version='1.2.0',
     author='Oliver Rodriguez',
     author_email='oliver.rdz@softpotato.xyz',
     packages=find_packages('src'),

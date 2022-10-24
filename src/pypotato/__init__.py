@@ -6,7 +6,7 @@ pypotato library
 from . import potentiostat
 from . import load_data
 
-__version__ = "1.1.1"
+__version__ = "1.2.0"
 __author__ = 'Oliver Rodriguez'
 
 # modules to import when user does 'from pytentiostat import *':
