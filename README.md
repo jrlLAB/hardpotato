@@ -2,6 +2,7 @@
 Python API to control the following potentiostats:
 
 * CHI760E from CH Instruments
+* CHI1205b from CH Instruments
 
 More will be added soon.
 
