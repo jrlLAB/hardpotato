@@ -51,7 +51,7 @@ class CV:
                     '\n\tpck_add a\n\tpck_add p\n\tpck_add c\n\tpck_add b\n\t' +\
                     'pck_end\nendloop\non_finished:\ncell_off\n\n'
         self.text = self.ini + self.pre_body + self.body
-        print(self.text)
+        #print(self.text)
 
         
 
@@ -63,9 +63,9 @@ class CA:
                  path_lib=None, qt=2):
         '''
         '''
-        Estep = int(Estep*1000)
-        dt = int(dt*1000)
-        ttot = int(ttot*1000)
+        self.Estep = int(Estep*1000)
+        self.dt = int(dt*1000)
+        self.ttot = int(ttot*1000)
         self.text = ''
         self.ini = 'e\nvar p\nvar c\nvar a\n'
         self.pre_body = 'set_pgstat_mode 3\nset_autoranging ba 100n 5m' +\
@@ -78,6 +78,22 @@ class CA:
         self.text = self.ini + self.pre_body + self.body
 
     def bipot(self, E, sens):
+        E = int(E*1000)
+        self.pre_body = 'var b\nset_pgstat_chan 1' +\
+                        '\nset_pgstat_mode 5' +\
+                        '\nset_poly_we_mode 0' +\
+                        '\nset_e '+ str(E) + 'm\nset_autoranging ba 100n 5m' +\
+                        '\nset_pgstat_chan 0\nset_pgstat_mode 2' +\
+                        '\nset_autoranging ba 100n 5m\nset_e ' + str(self.Estep) +\
+                        'm\ntimer_start\ncell_on'
+        self.body = '\nmeas_loop_ca p c ' + str(self.Estep) + 'm ' +\
+                    str(self.dt) + 'm ' +\
+                    str(self.ttot) + 'm poly_we(1 b)\n\t' +\
+                    'pck_start\n\ttimer_get a' +\
+                    '\n\tpck_add a\n\tpck_add p\n\tpck_add c\n\tpck_add b\n\t' +\
+                    'pck_end\nendloop\non_finished:\ncell_off\n\n'
+        self.text = self.ini + self.pre_body + self.body
+
         pass
 
 
@@ -86,10 +102,10 @@ class LSV:
     '''
     def __init__(self, Eini, Efin, sr, dE, sens, folder, fileName, header, 
                  path_lib=None, qt=2):
-        Eini = int(Eini*1000)
-        Efin = int(Efin*1000)
-        sr = int(sr*1000)
-        dE = int(dE*1000)
+        self.Eini = int(Eini*1000)
+        self.Efin = int(Efin*1000)
+        self.sr = int(sr*1000)
+        self.dE = int(dE*1000)
         self.text = ''
         self.ini = 'e\nvar c\nvar p\nvar a\n'
         self.pre_body = 'set_pgstat_mode 4\nset_autoranging ba 100n 5m' +\
@@ -100,6 +116,26 @@ class LSV:
                     '\n\tpck_add a\n\tpck_add p\n\tpck_add c\n\tpck_end\nendloop\n' + \
                     'on_finished:\ncell_off\n\n'
         self.text = self.ini + self.pre_body + self.body
+
+    def bipot(self, E, sens):
+        E = int(E*1000)
+        self.pre_body = 'var b\nset_pgstat_chan 1' +\
+                        '\nset_pgstat_mode 5' +\
+                        '\nset_poly_we_mode 0' +\
+                        '\nset_e '+ str(E) + 'm\nset_autoranging ba 100n 5m' +\
+                        '\nset_pgstat_chan 0\nset_pgstat_mode 2' +\
+                        '\nset_autoranging ba 100n 5m\nset_e ' + str(self.Eini) +\
+                        'm\ntimer_start\ncell_on'
+        self.body = '\nmeas_loop_lsv p c ' + str(self.Eini) + 'm ' +\
+                    str(self.Efin) + 'm ' +\
+                    str(self.dE) + 'm ' + str(self.sr) +\
+                    'm poly_we(1 b)\n\t' +\
+                    'pck_start\n\ttimer_get a' +\
+                    '\n\tpck_add a\n\tpck_add p\n\tpck_add c\n\tpck_add b\n\t' +\
+                    'pck_end\nendloop\non_finished:\ncell_off\n\n'
+        self.text = self.ini + self.pre_body + self.body
+        #print(self.text)
+
 
 class OCP:
     '''
