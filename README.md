@@ -69,6 +69,7 @@ recent versions of the software. Please contact CHI support for help on updating
 the potentiostat software and firmware.
 
 # Notes for Emstat Pico users
+* Contact PalmSens for instructions on how to update the firmware of the Pico.
 * The communication to the Pico is done via the serial port, this means that no
 external software is required. Because of this, there is no live plotting, however,
 the data and plots are saved when the measurement is finished.
