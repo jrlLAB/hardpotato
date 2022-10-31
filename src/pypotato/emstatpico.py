@@ -30,7 +30,6 @@ class CV:
                     '\n\tpck_add a\n\tpck_add p\n\tpck_add c\n\tpck_end\nendloop\n' + \
                     'on_finished:\ncell_off\n\n'
         self.text = self.ini + self.pre_body + self.body
-        print(self.text)
 
 
     def bipot(self, E, sens):
@@ -81,7 +80,6 @@ class LSV:
                     '\n\tpck_add a\n\tpck_add p\n\tpck_add c\n\tpck_end\nendloop\n' + \
                     'on_finished:\ncell_off\n\n'
         self.text = self.ini + self.pre_body + self.body
-        print(self.text)
 
 class OCP:
     '''
@@ -96,7 +94,6 @@ class OCP:
                     '\n\tpck_start\n\ttimer_get a\n\tpck_add a\n\tpck_add p' +\
                     '\n\tpck_end\nendloop\non_finished:\ncell_off\n\n'
         self.text = self.ini + self.pre_body + self.body
-        print(self.text)
         
 
         #'\n\tpck_start\n\ttimer_get a\n\tpck_add p\n\tpck_add a' +\

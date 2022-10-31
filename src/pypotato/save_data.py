@@ -19,7 +19,7 @@ class Save:
         if technique == 'CV' or technique == 'LSV':
             header = header + '\nt/s, E/V, i/A\n' 
             self.data_array = CV(fileName, data, model).save()
-        elif technique == 'IT':
+        elif technique == 'IT' or technique == 'CA':
             header = header + '\nt/s, E/V, i/A\n'
             self.data_array = IT(fileName, data, model).save()
         elif technique == 'OCP':

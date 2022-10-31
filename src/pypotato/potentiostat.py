@@ -73,7 +73,7 @@ class Technique:
             # Run command:
             command = path_lib #+ '/chi760e.exe'
             param = ' /runmacro:\"' + folder_save + '/' + self.fileName + '.mcr\"'
-            print(param)
+            #print(param)
             os.system(command + param)
             self.message(start=False)
             self.plot()
@@ -113,8 +113,6 @@ class Technique:
                              fileName=folder_save + '/' + self.fileName)
         elif self.technique == 'OCP':
             ocp = load_data.OCP(self.fileName+'.txt', folder_save, model_pstat)
-            print(ocp.t)
-            print(ocp.E)
             sp.plotting.plot(ocp.t, ocp.E, show=False, fig=figNum,
                              xlab='$t$ / s', ylab='$E$ / V',
                              fileName=folder_save + '/' + self.fileName)
