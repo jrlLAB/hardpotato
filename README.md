@@ -4,7 +4,7 @@ API to control commercially available potentiostats. It enables researchers to
 write Python scripts that can include experimentation, immediate data analysis
 using any third-party library and/or the control of other instruments. Pypotato
 facilitates the standardization of electrochemical experiments by keeping a 
-record of the experiments and data analysis that can be later run to ensure 
+record of the experiments and data analysis that can be later run again to ensure 
 repeatability. It also facilitates the sharing of electrochemical protocols 
 between researchers and groups that own different potentiostats. 
 
@@ -92,7 +92,7 @@ code is in the [PalmSens MethodScript GitHub account](https://github.com/PalmSen
 # Authors
 Pypotato was developed at the University of Illinois at Urbana-Champaign by:
 
-* Oliver Rodriguez (oliver.rdz@softpotato.xyz)
+* Oliver Rodriguez ([oliverrdz.xyz](https://oliverrdz.xyz))
 * Michael Pence
 * Joaquin Rodriguez-Lopez (joaquinr@illinois.edu)
 
