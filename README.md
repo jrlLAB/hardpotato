@@ -14,6 +14,15 @@ Currently, the following potentiostats are included in the library:
 * CHI1205b from CH Instruments (chi1205b)
 * Emstat Pico from PalmSens (emstatpico)
 
+with the following techniques:
+* Cyclic voltammetry, CV
+* Chronoamperometry, CA
+* Linear sweep voltammetry, LSV
+* Open circuit potential, OCP
+
+For the CHI760E only (so far):
+* Normal pulse voltammetry, NPV
+* Electrochemical impedance spectroscopy, EIS
 
 
 # Installation
