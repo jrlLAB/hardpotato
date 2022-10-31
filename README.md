@@ -23,6 +23,10 @@ pip install pypotato
 ```
 
 # Usage
+Here are quick examples on how to use the library. For more help check the
+[docs](https://github.com/oliverrdz/pypotato_fork/tree/main/docs) and the
+[Examples](https://github.com/oliverrdz/pypotato_fork/tree/main/examples) folders.
+
 ```python
 from pypotato import *
 
