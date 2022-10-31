@@ -17,7 +17,7 @@ University of Illinois at Urbana-Champaign.
 Funded by [JCESR](https://www.jcesr.org/).
 
 # Installation
-Open a console and do:
+Open a console and type:
 ```python
 pip install pypotato
 ```
