@@ -26,7 +26,7 @@ pip install pypotato
 * Since the CHI potentiostat software only work in Windows, any script written with
 pypotato will only work in Windows.
 * The chi translators use macro commands that are only available in the most 
-recent versions of the software. Please contact CH support for help on updating
+recent versions of the software. Please contact CHI support for help on updating
 the potentiostat software and firmware.
 
 # Notes for Emstat Pico users
