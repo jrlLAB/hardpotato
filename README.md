@@ -1,20 +1,20 @@
 # Pypotato library
-Python API to control the following potentiostats:
+Welcome to the pypotato GitHub repository. Pypotato is an open source Python
+API to control commercially available potentiostats. It enables researchers to
+write Python scripts that can include experimentation, immediate data analysis
+using any third-party library and/or the control of other instruments. Pypotato
+facilitates the standardization of electrochemical experiments by keeping a 
+record of the experiments and data analysis that can be later run to ensure 
+repeatability. It also facilitates the sharing of electrochemical protocols 
+between researchers and groups that own different potentiostats. 
+
+Currently, the following potentiostats are included in the library:
 
 * CHI760E from CH Instruments (chi760e)
 * CHI1205b from CH Instruments (chi1205b)
 * Emstat Pico from PalmSens (emstatpico)
 
 
-Authors:
-
-* Oliver Rodriguez (oliver.rdz@softpotato.xyz)
-* Michael Pence
-* Joaquin Rodriguez-Lopez (joaquinr@illinois.edu)
-
-University of Illinois at Urbana-Champaign.
-
-Funded by [JCESR](https://www.jcesr.org/).
 
 # Installation
 Open a console and type:
@@ -64,7 +64,7 @@ ocp.run()
 # Notes for CH Instruments users
 * Since the CHI potentiostat software only works in Windows, any script written with
 pypotato will only work in Windows.
-* The chi translators use macro commands that are only available in the most 
+* The CHI translators use macro commands that are only available in the most 
 recent versions of the software. Please contact CHI support for help on updating
 the potentiostat software and firmware.
 
@@ -88,3 +88,13 @@ tested in Windows 10 and Manjaro Linux with kernel 5.15.xx.
 started from the Windows command line and for creating the Macros.
 * To PalmSens for developing MethodScript and writing code for parsing data. The
 code is in the [PalmSens MethodScript GitHub account](https://github.com/PalmSens/MethodSCRIPT_Examples)
+
+# Authors
+Pypotato was developed at the University of Illinois at Urbana-Champaign by:
+
+* Oliver Rodriguez (oliver.rdz@softpotato.xyz)
+* Michael Pence
+* Joaquin Rodriguez-Lopez (joaquinr@illinois.edu)
+
+Funded by [JCESR](https://www.jcesr.org/).
+
