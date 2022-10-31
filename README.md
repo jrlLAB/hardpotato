@@ -22,6 +22,36 @@ Open a console and do:
 pip install pypotato
 ```
 
+# Usage
+```python
+from pypotato import *
+
+# Potentiostat setup
+model = 'chi760e' # Also: chi1205b, emstatpico
+path = 'C:/Users/jrl/CHI/chi760e.exe' # This is ignored for the Pico
+folder = 'C:/Users/jrl/Experiments/data'
+potentiostat.Setup(model, path, folder)
+
+# Run CV with default values:
+cv = potentiostat.CV()
+#cv.bipot() # uncomment to activate second working electrode
+cv.run()
+
+# Run a LSV with default values:
+lsv = potentiostat.LSV()
+#lsv.bipot() # uncomment to activate second working electrode
+lsv.run()
+
+# Run a CA with default values:
+ca = potentiostat.CA()
+#ca.bipot() # uncomment to activate second working electrode
+ca.run()
+
+# Run an OCP with default values:
+ocp = potentiostat.OCP()
+ocp.run()
+```
+
 # Notes for CH Instruments users
 * Since the CHI potentiostat software only work in Windows, any script written with
 pypotato will only work in Windows.
@@ -36,7 +66,6 @@ the data and plots are saved when the measurement is finished.
 * Scripts written for the pico may also work in other operating systems, provided
 the library is installed correctly. So far, pypotato with the Pico has been 
 tested in Windows 10 and Manjaro Linux with kernel 5.15.xx. 
-
 
 # Requirements
 * numpy
