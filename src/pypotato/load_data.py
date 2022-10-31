@@ -15,24 +15,29 @@ class Read:
         self.file_path = self.folder + '/' + self.fileName
 
     def read(self, text=0, model=0):
+        self.delimiter = ','
         if model[0:3] == 'chi':
-            self.delimiter = ','
             self.skiprows = self.search(text)
             if self.skiprows:
                 self.data = np.loadtxt(self.file_path, delimiter=self.delimiter, 
                             skiprows=self.skiprows)
-                self.x = self.data[:,0]
-                self.y = self.data[:,1:]
+                self.E = self.data[:,0]
+                self.i = -self.data[:,1:]
             else:
                 print('Could not find string \"' + text + '\" to skip rows.' +\
                       ' Data not loaded.')
                 self.x = np.array([])
                 self.y = np.array([])
+        elif model == 'emstatpico':
+            self.data = np.loadtxt(self.file_path, delimiter=self.delimiter)
+            self.t = self.data[:,0]
+            self.E = self.data[:,1]
+            self.i = self.data[:,2:]
         else:
             self.data = np.loadtxt(self.file_path, delimiter=self.delimiter, 
                         skiprows=self.skiprows)
-            self.x = self.data[:,0]
-            self.y = self.data[:,1:]
+            self.E = self.data[:,0]
+            self.i = self.data[:,1:]
 
     def search(self, text):
         file = open(self.file_path, 'r')
@@ -63,13 +68,14 @@ class CV(Read):
     '''
     '''
     def __init__(self, fileName='file', folder='.', model=0):
+        #print(model)
         self.fileName = fileName
         self.folder = folder
         text = 'Potential/V,'
         Read.__init__(self)
         self.read(text, model)
-        self.E = self.x
-        self.i = self.y
+        #self.E = self.x
+        #self.i = self.y
 
 
 class LSV(Read):
@@ -90,8 +96,9 @@ class CA(Read):
         text = 'Time/sec,'
         Read.__init__(self)
         self.read(text, model)
-        self.t = self.x
-        self.i = self.y
+        self.t = self.t
+        self.E = self.E
+        self.i = self.i
 
 
 class OCP(Read):
@@ -100,4 +107,4 @@ class OCP(Read):
     def __init__(self, fileName='file', folder='.', model=0):
         ca = CA(fileName, folder, model) # Same as CA
         self.t = ca.t
-        self.E = ca.i
+        self.E = ca.E

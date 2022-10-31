@@ -1,9 +1,15 @@
 import os
 import numpy as np
-import pypotato.load_data as load_data
+import load_data as load_data
+import save_data as save_data
 import softpotato as sp
-import pypotato.chi760e as chi760e
-import pypotato.chi1205b as chi1205b
+import chi760e
+import chi1205b
+import emstatpico
+
+import palmsens.instrument
+import palmsens.mscript
+import palmsens.serial
 
 # Potentiostat models available: chi760e, chi1205b
 
@@ -19,13 +25,15 @@ class Test:
         print('Test from potentiostat module')
 
 class Setup:
-    def __init__(self, model=0, path='.', folder='.', verbose=1):
+    def __init__(self, model=0, path='.', folder='.', port=None, verbose=1):
         global folder_save
         folder_save = folder
         global model_pstat
         model_pstat = model
         global path_lib
         path_lib = path
+        global port_
+        port_ = port
         if verbose:
             self.info()
 
@@ -52,6 +60,10 @@ class Technique:
             file = open(folder_save + '/' + self.fileName + '.mcr', 'wb')
             file.write(self.text.encode('ascii'))
             file.close()
+        elif model_pstat == 'emstatpico':
+            file = open(folder_save + '/' + self.fileName + '.mscr', 'wb')
+            file.write(self.text.encode('ascii'))
+            file.close()
 
     def run(self):
         if model_pstat[0:3] == 'chi':
@@ -65,27 +77,44 @@ class Technique:
             os.system(command + param)
             self.message(start=False)
             self.plot()
+        elif model_pstat == 'emstatpico':
+            self.message()
+            self.writeToFile()
+            if port_ is None:
+                self.port = palmsens.serial.auto_detect_port()
+            with palmsens.serial.Serial(self.port,1) as comm:
+                dev = palmsens.instrument.Instrument(comm)
+                dev.send_script(folder_save + '/' + self.fileName + '.mscr')
+                result = dev.readlines_until_end()
+            self.data = palmsens.mscript.parse_result_lines(result)
+            fileName = folder_save + '/' + self.fileName + '.txt'
+            save = save_data.Save(self.data, fileName, self.header, model_pstat, 
+                           self.technique)
+            self.message(start=False)
+            self.plot()
         else:
             print('\nNo potentiostat selected. Aborting.')
 
     def plot(self):
         figNum = np.random.randint(1000)
-        print(figNum)
+        #print(figNum)
         if self.technique == 'CV':
             cv = load_data.CV(self.fileName+'.txt', folder_save, model_pstat)
-            sp.plotting.plot(cv.E, -cv.i, show=False, fig=figNum,
+            sp.plotting.plot(cv.E, cv.i, show=False, fig=figNum,
                              fileName=folder_save + '/' + self.fileName)
         elif self.technique == 'LSV':
             lsv = load_data.LSV(self.fileName+'.txt', folder_save, model_pstat)
-            sp.plotting.plot(lsv.E, -lsv.i, show=False, fig=figNum,
+            sp.plotting.plot(lsv.E, lsv.i, show=False, fig=figNum,
                              fileName=folder_save + '/' + self.fileName)
         elif self.technique == 'CA':
             ca = load_data.CA(self.fileName+'.txt', folder_save, model_pstat)
-            sp.plotting.plot(ca.t, -ca.i, show=False, fig=figNum,
+            sp.plotting.plot(ca.t, ca.i, show=False, fig=figNum,
                              xlab='$t$ / s', ylab='$i$ / A',
                              fileName=folder_save + '/' + self.fileName)
         elif self.technique == 'OCP':
             ocp = load_data.OCP(self.fileName+'.txt', folder_save, model_pstat)
+            print(ocp.t)
+            print(ocp.E)
             sp.plotting.plot(ocp.t, ocp.E, show=False, fig=figNum,
                              xlab='$t$ / s', ylab='$E$ / V',
                              fileName=folder_save + '/' + self.fileName)
@@ -119,6 +148,7 @@ class CV(Technique):
     def __init__(self, Eini=-0.2, Ev1=0.2, Ev2=-0.2, Efin=-0.2, sr=0.1,
                  dE=0.001, nSweeps=2, sens=1e-6,
                  fileName='CV', header='CV', resistance=0):
+        self.header = header
         if model_pstat == 'chi760e':
             self.tech = chi760e.CV(Eini, Ev1, Ev2, Efin, sr, dE, nSweeps, sens,
                                folder_save, fileName, header, path_lib, qt=2, 
@@ -130,6 +160,13 @@ class CV(Technique):
             self.tech = chi1205b.CV(Eini, Ev1, Ev2, Efin, sr, dE, nSweeps, sens,
                                folder_save, fileName, header, path_lib, qt=2, 
                                resistance=resistance)
+            Technique.__init__(self, text=self.tech.text, fileName=fileName)
+            self.technique = 'CV'
+            print('CV')
+        elif model_pstat == 'emstatpico':
+            self.tech = emstatpico.CV(Eini, Ev1, Ev2, Efin, sr, dE, nSweeps, sens, 
+                                folder_save, fileName, header, path_lib='',
+                                qt=0, resistance=0)
             Technique.__init__(self, text=self.tech.text, fileName=fileName)
             self.technique = 'CV'
             print('CV')
@@ -155,6 +192,7 @@ class LSV(Technique):
     '''
     def __init__(self, Eini=-0.2, Efin=0.2, sr=0.1, dE=0.001, sens=1e-6,
                  fileName='LSV', header='LSV'):
+        self.header = header
         if model_pstat == 'chi760e':
             self.tech = chi760e.LSV(Eini, Efin, sr, dE, sens, folder_save, fileName, 
                                 header, path_lib, qt=2)
@@ -162,6 +200,11 @@ class LSV(Technique):
             self.technique = 'LSV'  
         elif model_pstat == 'chi1205b':
             self.tech = chi1205b.LSV(Eini, Efin, sr, dE, sens, folder_save, fileName, 
+                                header, path_lib, qt=2)
+            Technique.__init__(self, text=self.tech.text, fileName=fileName)
+            self.technique = 'LSV'  
+        elif model_pstat == 'emstatpico':
+            self.tech = emstatpico.LSV(Eini, Efin, sr, dE, sens, folder_save, fileName, 
                                 header, path_lib, qt=2)
             Technique.__init__(self, text=self.tech.text, fileName=fileName)
             self.technique = 'LSV'  
@@ -173,6 +216,7 @@ class CA(Technique):
     '''
     def __init__(self, Estep=0.2, dt=0.001, ttot=2, sens=1e-6,
                  fileName='CA', header='CA'):
+        self.header = header
         if model_pstat == 'chi760e':
             self.tech = chi760e.CA(Estep, dt, ttot, sens, folder_save, fileName,
                                header, path_lib, qt=2)
@@ -184,6 +228,11 @@ class CA(Technique):
                                header, path_lib, qt=2)
             Technique.__init__(self, text=self.tech.text, fileName=fileName)
             self.technique = 'CA'
+        elif model_pstat == 'emstatpico':
+            self.tech = emstatpico.CA(Estep, dt, ttot, sens, folder_save, fileName,
+                               header, path_lib, qt=2)
+            Technique.__init__(self, text=self.tech.text, fileName=fileName)
+            self.technique = 'CA'
 
 
 
@@ -192,6 +241,7 @@ class OCP(Technique):
     '''
     '''
     def __init__(self, ttot=2, dt=0.01, fileName='OCP', header='OCP'):
+        self.header = header
         if model_pstat == 'chi760e':
             self.tech = chi760e.OCP(ttot, dt, folder_save, fileName, header, path_lib)
             Technique.__init__(self, text=self.tech.text, fileName=fileName)
@@ -199,6 +249,11 @@ class OCP(Technique):
             print('OCP')
         elif model_pstat == 'chi1205b':
             self.tech = chi1205b.OCP(ttot, dt, folder_save, fileName, header, path_lib)
+            Technique.__init__(self, text=self.tech.text, fileName=fileName)
+            self.technique = 'OCP'
+            print('OCP')
+        elif model_pstat == 'emstatpico':
+            self.tech = emstatpico.OCP(ttot, dt, folder_save, fileName, header, path_lib)
             Technique.__init__(self, text=self.tech.text, fileName=fileName)
             self.technique = 'OCP'
             print('OCP')
@@ -210,6 +265,7 @@ class EIS(Technique):
     '''
     def __init__(self, Eini=0, low_freq=1, high_freq=1000, amplitude=0.01, 
                  sens=1e-6, qt=0, fileName='EIS', header='EIS'):
+        self.header = header
         if model_pstat == 'chi760e':
             self.tech = chi760e.EIS(Eini, low_freq, high_freq, amplitude, sens, qt, 
                                 folder_save, fileName, header, path_lib)
