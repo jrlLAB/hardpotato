@@ -27,9 +27,14 @@ pip install pypotato
 from pypotato import *
 
 # Potentiostat setup
-model = 'chi760e' # Also: chi1205b, emstatpico
+# Choose the correct model from ['chi760e', 'chi1205b', 'emstatpico']:
+model = 'chi760e' 
+# Write the path where the chi software is installed (this line is optional when
+# using the Pico):
 path = 'C:/Users/jrl/CHI/chi760e.exe' # This is ignored for the Pico
+# Write the path where the data and plots are going to be automatically saved:
 folder = 'C:/Users/jrl/Experiments/data'
+# Setup:
 potentiostat.Setup(model, path, folder)
 
 # Run CV with default values:
