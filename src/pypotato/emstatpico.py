@@ -14,26 +14,46 @@ class CV:
             Potential based variables need to be changed to mV int(Eini*100).
             For some reason Pico does not accept not having prefix 
         '''
-        Eini = int(Eini*1000)
-        Ev1 = int(Ev1*1000)
-        Ev2 = int(Ev2*1000)
-        Efin = int(Efin*1000)
-        sr = int(sr*1000)
-        dE = int(dE*1000)
+        self.Eini = int(Eini*1000)
+        self.Ev1 = int(Ev1*1000)
+        self.Ev2 = int(Ev2*1000)
+        self.Efin = int(Efin*1000)
+        self.sr = int(sr*1000)
+        self.dE = int(dE*1000)
+        self.nSweeps = nSweeps
         self.text = ''
         self.ini = 'e\nvar c\nvar p\nvar a\n'
         self.pre_body = 'set_pgstat_mode 4\nset_autoranging ba 100n 5m' +\
-                        '\nset_e '+ str(Eini) + 'm\ncell_on\ntimer_start'
-        self.body = '\nmeas_loop_cv p c ' + str(Eini) + 'm ' + str(Ev1) + 'm ' +\
-                    str(Ev2) + 'm ' + str(dE) + 'm ' + str(sr) +\
-                    'm nscans(' + str(nSweeps) + ')\n\tpck_start\n\ttimer_get a' +\
+                        '\nset_e '+ str(self.Eini) + 'm\ncell_on\ntimer_start'
+        self.body = '\nmeas_loop_cv p c ' + str(self.Eini) + 'm ' +\
+                    str(self.Ev1) + 'm ' +\
+                    str(self.Ev2) + 'm ' + str(self.dE) + 'm ' + str(self.sr) +\
+                    'm nscans(' + str(self.nSweeps) + ')\n\tpck_start\n\ttimer_get a' +\
                     '\n\tpck_add a\n\tpck_add p\n\tpck_add c\n\tpck_end\nendloop\n' + \
                     'on_finished:\ncell_off\n\n'
         self.text = self.ini + self.pre_body + self.body
 
 
     def bipot(self, E, sens):
-        pass
+        E = int(E*1000)
+        self.pre_body = 'var b\nset_pgstat_chan 1' +\
+                        '\nset_pgstat_mode 5' +\
+                        '\nset_poly_we_mode 0' +\
+                        '\nset_e '+ str(E) + 'm\nset_autoranging ba 100n 5m' +\
+                        '\nset_pgstat_chan 0\nset_pgstat_mode 2' +\
+                        '\nset_autoranging ba 100n 5m\nset_e ' + str(self.Eini) +\
+                        'm\ntimer_start\ncell_on'
+        self.body = '\nmeas_loop_cv p c ' + str(self.Eini) + 'm ' +\
+                    str(self.Ev1) + 'm ' +\
+                    str(self.Ev2) + 'm ' + str(self.dE) + 'm ' + str(self.sr) +\
+                    'm nscans(' + str(self.nSweeps) + ') poly_we(1 b)\n\t' +\
+                    'pck_start\n\ttimer_get a' +\
+                    '\n\tpck_add a\n\tpck_add p\n\tpck_add c\n\tpck_add b\n\t' +\
+                    'pck_end\nendloop\non_finished:\ncell_off\n\n'
+        self.text = self.ini + self.pre_body + self.body
+        print(self.text)
+
+        
 
 
 class CA:

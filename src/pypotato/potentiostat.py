@@ -86,10 +86,11 @@ class Technique:
                 dev = palmsens.instrument.Instrument(comm)
                 dev.send_script(folder_save + '/' + self.fileName + '.mscr')
                 result = dev.readlines_until_end()
+                #print(result)
             self.data = palmsens.mscript.parse_result_lines(result)
             fileName = folder_save + '/' + self.fileName + '.txt'
             save = save_data.Save(self.data, fileName, self.header, model_pstat, 
-                           self.technique)
+                           self.technique, bpot=self.bpot)
             self.message(start=False)
             self.plot()
         else:
@@ -127,9 +128,13 @@ class Technique:
         else:
             print(self.technique + ' finished\n----------\n')
 
-    def bipot(self, E=-0.5, sens=1e-6):
+    def bipot(self, E=-0.2, sens=1e-6):
         if self.technique != 'OCP' and self.technique != 'EIS':
             if model_pstat == 'chi760e':
+                self.tech.bipot(E, sens)
+                self.text = self.tech.text
+                self.bpot = True
+            elif model_pstat == 'emstatpico':
                 self.tech.bipot(E, sens)
                 self.text = self.tech.text
                 self.bpot = True
