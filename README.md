@@ -62,7 +62,7 @@ ocp.run()
 ```
 
 # Notes for CH Instruments users
-* Since the CHI potentiostat software only work in Windows, any script written with
+* Since the CHI potentiostat software only works in Windows, any script written with
 pypotato will only work in Windows.
 * The chi translators use macro commands that are only available in the most 
 recent versions of the software. Please contact CHI support for help on updating
