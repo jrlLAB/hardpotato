@@ -30,7 +30,7 @@ from pypotato import *
 # Choose the correct model from ['chi760e', 'chi1205b', 'emstatpico']:
 model = 'chi760e' 
 # Write the path where the chi software is installed (this line is optional when
-# using the Pico):
+# using the Pico). Make sure to use / instead of \:
 path = 'C:/Users/jrl/CHI/chi760e.exe' # This is ignored for the Pico
 # Write the path where the data and plots are going to be automatically saved:
 folder = 'C:/Users/jrl/Experiments/data'
