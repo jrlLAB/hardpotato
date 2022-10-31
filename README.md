@@ -8,9 +8,9 @@ Python API to control the following potentiostats:
 
 Authors:
 
-* Oliver Rodriguez*
+* Oliver Rodriguez (oliver.rdz@softpotato.xyz)
 * Michael Pence
-* Joaquin Rodriguez-Lopez
+* Joaquin Rodriguez-Lopez (joaquinr@illinois.edu)
 
 University of Illinois at Urbana-Champaign.
 
