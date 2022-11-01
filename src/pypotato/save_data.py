@@ -1,6 +1,6 @@
 import numpy as np
 import softpotato as sp
-import palmsens.mscript
+import pypotato.mscript as mscript
 
 class Test:
     '''
@@ -40,12 +40,12 @@ class CV:
 
     def save(self):
         if self.model == 'emstatpico':
-            t = palmsens.mscript.get_values_by_column(self.data,0)
-            E = palmsens.mscript.get_values_by_column(self.data,1)
-            i = palmsens.mscript.get_values_by_column(self.data,2)
+            t = mscript.get_values_by_column(self.data,0)
+            E = mscript.get_values_by_column(self.data,1)
+            i = mscript.get_values_by_column(self.data,2)
             data_array = np.array([t,E,i]).T
             if self.bpot:
-                i2 = palmsens.mscript.get_values_by_column(self.data,3)
+                i2 = mscript.get_values_by_column(self.data,3)
                 data_array = np.array([t,E,i,i2]).T
 
         return data_array
@@ -64,12 +64,12 @@ class IT:
 
     def save(self):
         if self.model == 'emstatpico':
-            t = palmsens.mscript.get_values_by_column(self.data,0)
-            E = palmsens.mscript.get_values_by_column(self.data,1)
-            i = palmsens.mscript.get_values_by_column(self.data,2)
+            t = mscript.get_values_by_column(self.data,0)
+            E = mscript.get_values_by_column(self.data,1)
+            i = mscript.get_values_by_column(self.data,2)
             data_array = np.array([t,E,i]).T
             if self.bpot:
-                i2 = palmsens.mscript.get_values_by_column(self.data,3)
+                i2 = mscript.get_values_by_column(self.data,3)
                 data_array = np.array([t,E,i,i2]).T
         return data_array
 
@@ -85,9 +85,9 @@ class OCP:
 
     def save(self):
         if self.model == 'emstatpico':
-            t = palmsens.mscript.get_values_by_column(self.data,0)
-            E = palmsens.mscript.get_values_by_column(self.data,1)
-            #i = palmsens.mscript.get_values_by_column(self.data,2)
+            t = mscript.get_values_by_column(self.data,0)
+            E = mscript.get_values_by_column(self.data,1)
+            #i = mscript.get_values_by_column(self.data,2)
             data_array = np.array([t,E]).T
         return data_array
 

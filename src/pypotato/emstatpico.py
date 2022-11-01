@@ -24,11 +24,11 @@ class CV:
         self.text = ''
         self.ini = 'e\nvar c\nvar p\nvar a\n'
         self.pre_body = 'set_pgstat_mode 4\nset_autoranging ba 100n 5m' +\
-                        '\nset_e '+ str(self.Eini) + 'm\ncell_on\ntimer_start'
+                        '\nset_e '+ str(self.Eini) + 'm\ncell_on\nwait 2\ntimer_start'
         self.body = '\nmeas_loop_cv p c ' + str(self.Eini) + 'm ' +\
                     str(self.Ev1) + 'm ' +\
                     str(self.Ev2) + 'm ' + str(self.dE) + 'm ' + str(self.sr) +\
-                    'm nscans(' + str(self.nSweeps) + ')\n\tpck_start\n\ttimer_get a' +\
+                    'm nscans(' + str(self.nSweeps-1) + ')\n\tpck_start\n\ttimer_get a' +\
                     '\n\tpck_add a\n\tpck_add p\n\tpck_add c\n\tpck_end\nendloop\n' + \
                     'on_finished:\ncell_off\n\n'
         self.text = self.ini + self.pre_body + self.body

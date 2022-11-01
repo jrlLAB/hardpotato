@@ -91,6 +91,7 @@ tested in Windows 10 and Manjaro Linux with kernel 5.15.xx.
 * matplotlib
 * scipy
 * softpotato
+* pyserial
 
 # Acknowledgements
 * To CH Instruments for making their software flexible enough that it can be 

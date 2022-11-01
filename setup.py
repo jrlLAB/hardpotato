@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='pypotato',
-    version='1.2.1',
+    version='1.2.2',
     author='Oliver Rodriguez',
     author_email='oliver.rdz@softpotato.xyz',
     packages=find_packages('src'),
@@ -14,5 +14,6 @@ setup(
 	'scipy',
 	'matplotlib',
 	'softpotato',
+    'pyserial'
     ],
 )

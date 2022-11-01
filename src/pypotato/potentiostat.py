@@ -1,15 +1,15 @@
 import os
 import numpy as np
-import load_data as load_data
-import save_data as save_data
+import pypotato.load_data as load_data
+import pypotato.save_data as save_data
 import softpotato as sp
-import chi760e
-import chi1205b
-import emstatpico
+import pypotato.chi760e as chi760e
+import pypotato.chi1205b as chi1205b
+import pypotato.emstatpico as emstatpico
 
-import palmsens.instrument
-import palmsens.mscript
-import palmsens.serial
+import pypotato.instrument as instrument
+import pypotato.mscript as mscript
+import pypotato.serial as serial
 
 # Potentiostat models available: chi760e, chi1205b
 
@@ -81,13 +81,13 @@ class Technique:
             self.message()
             self.writeToFile()
             if port_ is None:
-                self.port = palmsens.serial.auto_detect_port()
-            with palmsens.serial.Serial(self.port,1) as comm:
-                dev = palmsens.instrument.Instrument(comm)
+                self.port = serial.auto_detect_port()
+            with serial.Serial(self.port,1) as comm:
+                dev = instrument.Instrument(comm)
                 dev.send_script(folder_save + '/' + self.fileName + '.mscr')
                 result = dev.readlines_until_end()
                 #print(result)
-            self.data = palmsens.mscript.parse_result_lines(result)
+            self.data = mscript.parse_result_lines(result)
             fileName = folder_save + '/' + self.fileName + '.txt'
             save = save_data.Save(self.data, fileName, self.header, model_pstat, 
                            self.technique, bpot=self.bpot)
