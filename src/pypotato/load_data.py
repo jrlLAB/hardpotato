@@ -97,8 +97,8 @@ class CA(Read):
         text = 'Time/sec,'
         Read.__init__(self)
         self.read(text, model)
-        self.t = self.t
-        self.E = self.E
+        self.t = self.E
+        #self.E = self.E
         self.i = self.i
 
 
@@ -108,4 +108,4 @@ class OCP(Read):
     def __init__(self, fileName='file', folder='.', model=0):
         ca = CA(fileName, folder, model) # Same as CA
         self.t = ca.t
-        self.E = ca.E
+        self.E = ca.i
