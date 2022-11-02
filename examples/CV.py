@@ -1,12 +1,12 @@
 from pypotato import *
 
 # Select the potentiostat model to use:
-model = 'chi1205b'
+model = 'chi760e'
 #model = 'chi760e'
 # Path to the chi software, including extension .exe
-path = 'C:/Users/oliverrz/Desktop/CHI/chi1205b_mini2/chi1205b.exe'
+path = 'C:/Users/jrl/Desktop/CHI/chi760e/chi760e.exe'
 # Folder where to save the data, it needs to be created previously
-folder = 'C:/Users/oliverrz/gitHub/pytentiostat_fork/examples/data'
+folder = 'C:/Users/jrl/echem/Data'
 # Initialization:
 potentiostat.Setup(model, path, folder)
 
