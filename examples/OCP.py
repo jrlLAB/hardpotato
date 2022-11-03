@@ -31,6 +31,6 @@ data = pp.load_data.OCP(fileName +'.txt', folder, model)
 E = data.E
 t = data.t
 
-# Plot CV with softpotato
+# Plot OCP with softpotato
 sp.plotting.plot(t, E, xlab='$t$ / s', ylab='$E$ / V', fig=1, show=1)
 

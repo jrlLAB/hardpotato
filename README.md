@@ -32,9 +32,7 @@ pip install pypotato
 ```
 
 # Example: techniques
-Here are quick examples on how to use the library. For more help check the
-[docs](https://github.com/oliverrdz/pypotato_fork/tree/main/docs) folder and the
-[Wiki](https://github.com/jrlLAB/pypotato/wiki).
+Here are quick examples on how to use the library. For more help check the [Wiki](https://github.com/jrlLAB/pypotato/wiki).
 
 ```python
 from pypotato import *
