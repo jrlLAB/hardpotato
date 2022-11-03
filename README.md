@@ -95,8 +95,8 @@ tested in Windows 10 and Manjaro Linux with kernel 5.15.xx.
 * To CH Instruments for making their software flexible enough that it can be 
 started from the Windows command line and for creating the Macros.
 * To PalmSens for developing MethodScript and writing code for parsing data. The
-code is in the [PalmSens MethodScript GitHub account](https://github.com/PalmSens/MethodSCRIPT_Examples)
-* This development is funded by the Joint Center for Energy Storage Research (JCESR).
+code is in the [PalmSens MethodScript GitHub account](https://github.com/PalmSens/MethodSCRIPT_Examples).
+* This development is funded by the Joint Center for Energy Storage Research ([JCESR](https://www.jcesr.org/)).
 
 # Authors
 Pypotato was developed at the University of Illinois at Urbana-Champaign by:
@@ -104,5 +104,3 @@ Pypotato was developed at the University of Illinois at Urbana-Champaign by:
 * Oliver Rodriguez ([oliverrdz.xyz](https://oliverrdz.xyz))
 * Michael Pence
 * Joaquin Rodriguez-Lopez (joaquinr@illinois.edu)
-
-Funded by [JCESR](https://www.jcesr.org/).
