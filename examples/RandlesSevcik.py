@@ -1,4 +1,4 @@
-from pypotato import *
+import pypotato as pp
 import numpy as np
 import matplotlib.pyplot as plt
 import softpotato as sp
@@ -7,13 +7,16 @@ from scipy.optimize import curve_fit
 ##### Setup
 # Select the potentiostat model to use:
 # emstatpico, chi1205b, chi760e
-model = 'chi760e'
-# Path to the chi software, including extension .exe
-path = 'C:/Users/jrl/Desktop/CHI/chi760e/chi760e.exe'
+#model = 'chi760e'
+model = 'chi1205b'
+#model = 'emstatpico'
+
+# Path to the chi software, including extension .exe. Negletected by emstatpico
+path = 'C:/Users/oliverrz/Desktop/CHI/chi1205b_mini2/chi1205b.exe'
 # Folder where to save the data, it needs to be created previously
-folder = 'C:/Users/jrl/echem/Data'
+folder = 'C:/Users/oliverrz/Desktop/data'
 # Initialization:
-potentiostat.Setup(model, path, folder)
+pp.potentiostat.Setup(model, path, folder)
 
 
 ##### Experimental parameters:
@@ -27,17 +30,17 @@ sens = 1e-4     # A/V, current sensitivity
 header = 'CV'   # header for data file
 
 ##### Experiment:
-sr = np.array([0.05, 0.1, 0.2])          # V/s, scan rate
+sr = np.array([0.02, 0.05, 0.1, 0.2])          # V/s, scan rate
 nsr = sr.size
 i = []
 for x in range(nsr):
     # initialize experiment:
     fileName = 'CV_' + str(int(sr[x]*1000)) + 'mVs'# base file name for data file
-    cv = potentiostat.CV(Eini, Ev1,Ev2, Efin, sr[x], dE, nSweeps, sens, fileName, header)
+    cv = pp.potentiostat.CV(Eini, Ev1,Ev2, Efin, sr[x], dE, nSweeps, sens, fileName, header)
     # Run experiment:
     cv.run()
     # load data to do the data analysis later
-    data = load_data.CV(fileName + '.txt', folder, model)
+    data = pp.load_data.CV(fileName + '.txt', folder, model)
     i.append(data.i)
 i = np.array(i)
 i = i[:,:,0].T
@@ -46,11 +49,12 @@ E = data.E
 
 ##### Data analysis
 # Estimation of D with Randles-Sevcik
-n = 1
-A = 0.071
-C = 1e-6
+n = 1       # number of electrons
+A = 0.071   # cm2, geometrical area
+C = 1e-6    # mol/cm3, bulk concentration
+
+# Showcases how powerful softpotato can be for fitting:
 def DiffCoef(sr, D):
-    # Showcases how powerful softpotato can be for fitting:
     macro = sp.Macro(n, A, C, D)
     rs = macro.RandlesSevcik(sr)
     return rs
@@ -65,7 +69,6 @@ D = popt[0]
 EPk_an = E[np.argmax(i, axis=0)]
 EPk_ca = E[np.argmin(i, axis=0)]
 E0 = np.mean((EPk_an+EPk_ca)/2)
-
 
 #### Simulation with softpotato
 iSim = []
