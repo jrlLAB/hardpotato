@@ -1,17 +1,19 @@
-from pypotato import *
+import pypotato as pp
+import softpotato as sp
 
 # Select the potentiostat model to use:
-model = 'chi760e'
+#model = 'chi760e'
+#model = 'chi1205b'
+model = 'emstatpico'
 
 # Path to the chi software, including extension .exe
-path = 'C:/Users/jrl/Desktop/CHI/chi1205b_mini2/chi760e.exe'
+path = 'C:/Users/oliverrz/Desktop/CHI/chi1205b_mini2/chi1205b.exe'
 
 # Folder where to save the data, it needs to be created previously
-folder = 'C:/Users/jrl/echem/Data'
+folder = 'C:/Users/oliverrz/Desktop/data'
 
 # Initialization:
-potentiostat.Setup(model, path, folder)
-
+pp.potentiostat.Setup(model, path, folder)
 
 # Experimental parameters:
 Estep = 0.5     # V, step potential
@@ -23,10 +25,16 @@ sens2 = 1e-9    # A/V, current sensitivity of the second working electrode
 fileName = 'CA' # base file name for data file
 header = 'CA'   # header for data file
 
-# initialize experiment:
-ca = potentiostat.CA(Estep, dt, ttot, sens, fileName, header)
-# Include second working electrode in bipotentiostat mode.
-# Comment or delete the next line to remove bipot mode.
-#cv.bipot(E2,sens2)
+# Initialize experiment:
+ca = pp.potentiostat.CA(Estep, dt, ttot, sens, fileName, header)
 # Run experiment:
 ca.run()
+
+# Load recently acquired data
+data = pp.load_data.CA(fileName +'.txt', folder, model)
+i = data.i
+t = data.t
+
+# Plot CV with softpotato
+sp.plotting.plot(t, i, xlab='$t$ / s', fig=1, show=1)
+

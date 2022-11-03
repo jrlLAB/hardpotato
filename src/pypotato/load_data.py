@@ -21,8 +21,8 @@ class Read:
             if self.skiprows:
                 self.data = np.loadtxt(self.file_path, delimiter=self.delimiter, 
                             skiprows=self.skiprows)
-                self.E = self.data[:,0]
-                self.i = -self.data[:,1:]
+                self.x = self.data[:,0]
+                self.y = -self.data[:,1:]
             else:
                 print('Could not find string \"' + text + '\" to skip rows.' +\
                       ' Data not loaded.')
@@ -75,8 +75,9 @@ class CV(Read):
         text = 'Potential/V,'
         Read.__init__(self)
         self.read(text, model)
-        #self.E = self.x
-        #self.i = self.y
+        if model[0:3] == 'chi':
+            self.E = self.x
+            self.i = self.y
 
 
 class LSV(Read):
@@ -97,15 +98,21 @@ class CA(Read):
         text = 'Time/sec,'
         Read.__init__(self)
         self.read(text, model)
-        self.t = self.E
-        #self.E = self.E
-        self.i = self.i
+        if model[0:3] == 'chi':
+            self.t = self.x
+            #self.E = self.E
+            self.i = self.y
 
 
 class OCP(Read):
     '''
     '''
     def __init__(self, fileName='file', folder='.', model=0):
-        ca = CA(fileName, folder, model) # Same as CA
-        self.t = ca.t
-        self.E = ca.i
+        self.fileName = fileName
+        self.folder = folder
+        text = 'Time/sec,'
+        Read.__init__(self)
+        self.read(text, model)
+        if model[0:3] == 'chi':
+            self.t = self.x
+            self.E = self.y
