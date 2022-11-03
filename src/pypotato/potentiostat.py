@@ -1,5 +1,6 @@
 import os
 import numpy as np
+import matplotlib.pyplot as plt
 import pypotato.load_data as load_data
 import pypotato.save_data as save_data
 import softpotato as sp
@@ -117,6 +118,7 @@ class Technique:
             sp.plotting.plot(ocp.t, ocp.E, show=False, fig=figNum,
                              xlab='$t$ / s', ylab='$E$ / V',
                              fileName=folder_save + '/' + self.fileName)
+        plt.close()    
          
 
 
