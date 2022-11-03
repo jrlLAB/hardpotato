@@ -99,7 +99,7 @@ class Technique:
 
     def plot(self):
         figNum = np.random.randint(100)
-        print(figNum)
+        #print(figNum)
         if self.technique == 'CV':
             cv = load_data.CV(self.fileName+'.txt', folder_save, model_pstat)
             sp.plotting.plot(cv.E, cv.i, show=False, fig=figNum,

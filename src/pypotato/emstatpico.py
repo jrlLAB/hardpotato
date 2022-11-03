@@ -69,9 +69,9 @@ class CA:
         self.text = ''
         self.ini = 'e\nvar p\nvar c\nvar a\n'
         self.pre_body = 'set_pgstat_mode 3\nset_autoranging ba 100n 5m' +\
-                        '\nset_e ' + str(Estep) + 'm\ncell_on\ntimer_start'
-        self.body = '\nmeas_loop_ca p c ' + str(Estep) + 'm ' + str(dt) +\
-                    'm ' + str(ttot) + 'm\n\tpck_start\n\ttimer_get a\n\t' +\
+                        '\nset_e ' + str(self.Estep) + 'm\ncell_on\ntimer_start'
+        self.body = '\nmeas_loop_ca p c ' + str(self.Estep) + 'm ' + str(self.dt) +\
+                    'm ' + str(self.ttot) + 'm\n\tpck_start\n\ttimer_get a\n\t' +\
                     'pck_add a\n\t' +\
                     'pck_add p\n\tpck_add c\n\tpck_end\n\tendloop' +\
                     '\non_finished:\ncell_off\n\n'
