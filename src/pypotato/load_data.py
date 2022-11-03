@@ -108,6 +108,11 @@ class OCP(Read):
     '''
     '''
     def __init__(self, fileName='file', folder='.', model=0):
-        ca = CA(fileName, folder, model) # Same as CA
-        self.t = ca.t
-        self.E = ca.i
+        self.fileName = fileName
+        self.folder = folder
+        text = 'Time/sec,'
+        Read.__init__(self)
+        self.read(text, model)
+        if model[0:3] == 'chi':
+            self.t = self.x
+            self.E = self.y

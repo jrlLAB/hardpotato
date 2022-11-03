@@ -145,7 +145,7 @@ class OCP:
         ttot = int(ttot*1000)
         self.text = ''
         self.ini = 'e\nvar p\nvar a\n'
-        self.pre_body = 'set_pgstat_mode 4\ntimer_start\n'
+        self.pre_body = 'set_pgstat_mode 4\ncell_off\ntimer_start\n'
         self.body = 'meas_loop_ocp p ' + str(dt) + 'm ' + str(ttot) + 'm '+\
                     '\n\tpck_start\n\ttimer_get a\n\tpck_add a\n\tpck_add p' +\
                     '\n\tpck_end\nendloop\non_finished:\ncell_off\n\n'
