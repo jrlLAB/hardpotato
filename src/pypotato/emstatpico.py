@@ -109,9 +109,9 @@ class LSV:
         self.text = ''
         self.ini = 'e\nvar c\nvar p\nvar a\n'
         self.pre_body = 'set_pgstat_mode 4\nset_autoranging ba 100n 5m' +\
-                        '\nset_e '+ str(Eini) + 'm\ncell_on\ntimer_start'
-        self.body = '\nmeas_loop_lsv p c ' + str(Eini) + 'm ' + str(Efin) + 'm ' +\
-                    str(dE) + 'm ' + str(sr) +\
+                        '\nset_e '+ str(self.Eini) + 'm\ncell_on\ntimer_start'
+        self.body = '\nmeas_loop_lsv p c ' + str(self.Eini) + 'm ' + str(self.Efin) + 'm ' +\
+                    str(self.dE) + 'm ' + str(self.sr) +\
                     'm\n\tpck_start\n\ttimer_get a' +\
                     '\n\tpck_add a\n\tpck_add p\n\tpck_add c\n\tpck_end\nendloop\n' + \
                     'on_finished:\ncell_off\n\n'
