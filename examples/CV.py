@@ -12,7 +12,6 @@ folder = 'data'
 # Initialization:
 pp.potentiostat.Setup(model, path, folder)
 
-
 # Experimental parameters:
 Eini = -0.5     # V, initial potential
 Ev1 = 0.5       # V, first vertex potential
