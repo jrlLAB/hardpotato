@@ -85,11 +85,11 @@ the library is installed correctly. So far, pypotato with the Pico has been
 tested in Windows 10 and Manjaro Linux with kernel 5.15.xx. 
 
 # Requirements
-* numpy
-* matplotlib
-* scipy
-* softpotato
-* pyserial
+* numpy for data handling
+* matplotlib for plotting
+* scipy for fitting
+* pyserial for serial handling
+* [softpotato](https://github.com/oliverrdz/softpotato) for electrochemical equations and simulations
 
 # Acknowledgements
 * To CH Instruments for making their software flexible enough that it can be 
