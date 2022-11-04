@@ -22,8 +22,6 @@ with the following techniques:
 
 For the CHI760E only (so far):
 * Normal pulse voltammetry, NPV
-* Electrochemical impedance spectroscopy, EIS
-
 
 # Installation
 Open a console and type:
