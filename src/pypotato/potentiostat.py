@@ -1,18 +1,19 @@
 import os
 import numpy as np
 import matplotlib.pyplot as plt
-import pypotato.load_data as load_data
-import pypotato.save_data as save_data
+import load_data as load_data
+import save_data as save_data
 import softpotato as sp
-import pypotato.chi760e as chi760e
-import pypotato.chi1205b as chi1205b
-import pypotato.emstatpico as emstatpico
+import chi760e as chi760e
+import chi1205b as chi1205b
+import emstatpico as emstatpico
 
-import pypotato.instrument as instrument
-import pypotato.mscript as mscript
-import pypotato.serial as serial
+import pico_instrument as instrument
+import pico_mscript as mscript
+import pico_serial as serial
 
-# Potentiostat models available: chi760e, chi1205b
+# Potentiostat models available: 
+models_available = ['chi1205b', 'chi760e', 'emstatpico']
 
 # Global variables
 folder_save = '.'
@@ -24,6 +25,26 @@ class Test:
     '''
     def __init__(self):
         print('Test from potentiostat module')
+
+
+class Info:
+    '''
+    '''
+
+    def __init__(self, model):
+        self.model = model
+        if self.model == 'chi1205b':
+            self.info = chi1205b.Info()
+        elif self.model == 'chi760e':
+            self.info = chi760e.Info()
+        elif self.model == 'emstatpico':
+            self.info = emstatpico.Info()
+        else:
+            print('Potentiostat model not available in the library.')
+            print('Available models:', models_available)
+
+    def techniques(self):
+        self.info.techniques()
 
 class Setup:
     def __init__(self, model=0, path='.', folder='.', port=None, verbose=1):
@@ -160,21 +181,21 @@ class CV(Technique):
                                resistance=resistance)
             Technique.__init__(self, text=self.tech.text, fileName=fileName)
             self.technique = 'CV'
-            print('CV')
+            #print('CV')
         elif model_pstat == 'chi1205b':
             self.tech = chi1205b.CV(Eini, Ev1, Ev2, Efin, sr, dE, nSweeps, sens,
                                folder_save, fileName, header, path_lib, qt=2, 
                                resistance=resistance)
             Technique.__init__(self, text=self.tech.text, fileName=fileName)
             self.technique = 'CV'
-            print('CV')
+            #print('CV')
         elif model_pstat == 'emstatpico':
             self.tech = emstatpico.CV(Eini, Ev1, Ev2, Efin, sr, dE, nSweeps, sens, 
                                 folder_save, fileName, header, path_lib='',
                                 qt=0, resistance=0)
             Technique.__init__(self, text=self.tech.text, fileName=fileName)
             self.technique = 'CV'
-            print('CV')
+            #print('CV')
 
 
 class NPV(Technique):
@@ -187,7 +208,7 @@ class NPV(Technique):
                          folder_save, fileName, header, path_lib, qt=0)
             Technique.__init__(self, text=self.tech.text, fileName=fileName)
             self.technique = 'NPV'
-            print('NPV')
+            #print('NPV')
 
     
 
@@ -227,7 +248,7 @@ class CA(Technique):
                                header, path_lib, qt=2)
             Technique.__init__(self, text=self.tech.text, fileName=fileName)
             self.technique = 'CA'
-            print('CA')
+            #print('CA')
         elif model_pstat == 'chi1205b':
             self.tech = chi1205b.CA(Estep, dt, ttot, sens, folder_save, fileName,
                                header, path_lib, qt=2)
@@ -251,17 +272,17 @@ class OCP(Technique):
             self.tech = chi760e.OCP(ttot, dt, folder_save, fileName, header, path_lib)
             Technique.__init__(self, text=self.tech.text, fileName=fileName)
             self.technique = 'OCP'
-            print('OCP')
+            #print('OCP')
         elif model_pstat == 'chi1205b':
             self.tech = chi1205b.OCP(ttot, dt, folder_save, fileName, header, path_lib)
             Technique.__init__(self, text=self.tech.text, fileName=fileName)
             self.technique = 'OCP'
-            print('OCP')
+            #print('OCP')
         elif model_pstat == 'emstatpico':
             self.tech = emstatpico.OCP(ttot, dt, folder_save, fileName, header, path_lib)
             Technique.__init__(self, text=self.tech.text, fileName=fileName)
             self.technique = 'OCP'
-            print('OCP')
+            #print('OCP')
 
 
 

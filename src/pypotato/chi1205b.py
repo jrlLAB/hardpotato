@@ -5,12 +5,37 @@ class Test:
         print('Test from chi1205b module')
 
 
+class Info:
+    '''
+    '''
+    def __init__(self):
+        self.tech = ['CV', 'CA', 'LSV', 'OCP']
+        self.E_min = -2.4
+        self.E_max = 2.4
+        self.sr_min = 0.000001
+        self.sr_max = 10
+        #self.dE_min = 
+        #self.sr_min = 
+
+
+
+    def techniques(self):
+        print('Model: CH Instruments 1205b (chi1205b)')
+        print('Techiques available:', self.tech)
+
+    def specifications(self):
+        print('Specifications list')
+
+
 class CV:
     def __init__(self, Eini, Ev1, Ev2, Efin, sr, dE, nSweeps, sens, 
                  folder, fileName, header, path_lib, qt=2, resistance=0):
         self.fileName = fileName
         self.folder = folder
         self.text = '' 
+
+        self.validate(Eini, Ev1, Ev2, Efin, sr, dE, nSweeps, sens)
+
         # correcting parameters:
         Ei = Eini
         if Ev1 > Ev2:
@@ -40,6 +65,23 @@ class CV:
         self.foot = '\n forcequit: yesiamsure\n'
         self.text = self.head + self.body2 + self.foot
 
+
+    def validate(self, Eini, Ev1, Ev2, Efin, sr, dE, nSweeps, sens):
+        info = Info()
+        self.limits(Eini, info.E_min, info.E_max, 'Eini', 'V')
+        self.limits(Ev1, info.E_min, info.E_max, 'Ev1', 'V')
+        self.limits(Ev2, info.E_min, info.E_max, 'Ev2', 'V')
+        self.limits(Efin, info.E_min, info.E_max, 'Efin', 'V')
+        self.limits(sr, info.sr_min, info.sr_max, 'sr', 'V/s')
+        #self.limits(dE, info.dE_min, info.dE_max, 'dE', 'V')
+        #self.limits(sens, info.sens_min, info.sens_max, 'sens', 'A/V')
+        print('All the parameters are valid')
+
+    def limits(self, val, low, high, label, units):
+        if val < low or val > high:
+            raise Exception(label + ' should be between ' + str(low) + ' ' +\
+                            units  + ' and ' + str(high) + ' ' + units +\
+                            '. Received ' + str(val) + ' ' + units)
 
 
 class LSV:

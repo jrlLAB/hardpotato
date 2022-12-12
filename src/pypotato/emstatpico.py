@@ -4,6 +4,13 @@ class Test:
     def __init__(self):
         print('Test from Emstat Pico translator')
 
+class Info:
+    def techniques(self):
+        techniques = ['CV', 'CA', 'LSV', 'OCP']
+        print('Model: Palmsense EmstatPico (emstatpico)')
+        print('Techiques available:', techniques)
+
+
 
 class CV:
     '''

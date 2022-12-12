@@ -4,6 +4,12 @@ class Test:
     def __init__(self):
         print('Test from chi760e module')
 
+class Info:
+    def techniques(self):
+        techniques = ['CV', 'CA', 'LSV', 'OCP', 'NPV', 'EIS']
+        print('Model: CH Instruments 760E (chi760e)')
+        print('Techiques available:', techniques)
+
 
 class CV:
     def __init__(self, Eini, Ev1, Ev2, Efin, sr, dE, nSweeps, sens, 
