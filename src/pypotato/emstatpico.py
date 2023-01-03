@@ -12,6 +12,9 @@ class Info:
     '''
     def __init__(self):
         self.tech = ['CV', 'CA', 'LSV', 'OCP']
+        self.options = [
+                        'Potentiostat mode (low_speed, high_speed, max_range)',
+                        ]
 
         self.E_min = -1.7
         self.E_max = 2
@@ -30,21 +33,31 @@ class Info:
                             units  + ' and ' + str(high) + ' ' + units +\
                             '. Received ' + str(val) + ' ' + units)
 
-    def techniques(self):
+    def specifications(self):
         print('Model: PalmSens Emstat Pico (emstatpico)')
         print('Techiques available:', self.tech)
+        print('Options available:', self.options)
 
-    def specifications(self):
-        print('Specifications list')
 
+ def get_mode(self, val):
+    if val == 'low_speed':
+        return 2
+    elif val == 'high_speed':
+        return 3
+    elif val == 'max_range':
+        return 4
+    else:
+        return 4
 
 
 
 class CV:
     '''
+        **kwargs:
+            mode # 'low_speed', 'high_speed', 'max_range'
     '''
     def __init__(self, Eini, Ev1, Ev2, Efin, sr, dE, nSweeps, sens,
-                 folder, fileName, header, path_lib=None, qt=2, resistance=0):
+                 folder, fileName, header, path_lib=None, **kwargs):
         '''
             Potential based variables need to be changed to mV int(Eini*100).
             For some reason Pico does not accept not having prefix 
@@ -58,11 +71,18 @@ class CV:
         self.nSweeps = nSweeps
         self.text = ''
 
+        if 'mode' in kwargs:
+            mode = kwargs.get('mode')
+            mode = get_mode(mode)
+        else:
+            mode = 4 # Defaults to max_range
+
         self.validate(Eini, Ev1, Ev2, Efin, sr, dE, nSweeps, sens)
 
 
         self.ini = 'e\nvar c\nvar p\nvar a\n'
-        self.pre_body = 'set_pgstat_mode 4\nset_autoranging ba 100n 5m' +\
+        self.pre_body = 'set_pgstat_mode ' str(self.mode) +\
+                        '\nset_autoranging ba 100n 5m' +\
                         '\nset_e '+ str(self.Eini) + 'm\ncell_on\nwait 2\ntimer_start'
         self.body = '\nmeas_loop_cv p c ' + str(self.Eini) + 'm ' +\
                     str(self.Ev1) + 'm ' +\
@@ -112,9 +132,11 @@ class CV:
 
 class CA:
     '''
+        **kwargs:
+            mode @ 'low_speed', 'high_speed', 'max_range'
     '''
     def __init__(self, Estep, dt, ttot, sens, folder, fileName, header,
-                 path_lib=None, qt=2):
+                 path_lib=None, **kwargs):
         '''
         '''
         self.Estep = int(Estep*1000)
@@ -122,10 +144,17 @@ class CA:
         self.ttot = int(ttot*1000)
         self.text = ''
 
+        if 'mode' in kwargs:
+            mode = kwargs.get('mode')
+            mode = get_mode(mode)
+        else:
+            mode = 4 # Defaults to max_range
+
         self.validate(Estep, dt, ttot, sens)
 
         self.ini = 'e\nvar p\nvar c\nvar a\n'
-        self.pre_body = 'set_pgstat_mode 3\nset_autoranging ba 100n 5m' +\
+        self.pre_body = 'set_pgstat_mode ' str(self.mode) +\
+                        '\nset_autoranging ba 100n 5m' +\
                         '\nset_e ' + str(self.Estep) + 'm\ncell_on\ntimer_start'
         self.body = '\nmeas_loop_ca p c ' + str(self.Estep) + 'm ' + str(self.dt) +\
                     'm ' + str(self.ttot) + 'm\n\tpck_start\n\ttimer_get a\n\t' +\
@@ -170,21 +199,32 @@ class CA:
 
 class LSV:
     '''
+        **kwargs:
+            mode # 'low_speed', 'high_speed', 'max_range'
     '''
     def __init__(self, Eini, Efin, sr, dE, sens, folder, fileName, header, 
-                 path_lib=None, qt=2):
+                 path_lib=None, **kwargs):
         self.Eini = int(Eini*1000)
         self.Efin = int(Efin*1000)
         self.sr = int(sr*1000)
         self.dE = int(dE*1000)
         self.text = ''
 
+        if 'mode' in kwargs:
+            mode = kwargs.get('mode')
+            mode = get_mode(mode)
+        else:
+            mode = 4 # Defaults to max_range
+
+
         self.validate(Eini, Efin, sr, dE, sens)
 
         self.ini = 'e\nvar c\nvar p\nvar a\n'
-        self.pre_body = 'set_pgstat_mode 4\nset_autoranging ba 100n 5m' +\
+        self.pre_body = 'set_pgstat_mode ' str(self.mode) +\
+                        '\nset_autoranging ba 100n 5m' +\
                         '\nset_e '+ str(self.Eini) + 'm\ncell_on\ntimer_start'
-        self.body = '\nmeas_loop_lsv p c ' + str(self.Eini) + 'm ' + str(self.Efin) + 'm ' +\
+        self.body = '\nmeas_loop_lsv p c ' + str(self.Eini) +\
+                    'm ' + str(self.Efin) + 'm ' +\
                     str(self.dE) + 'm ' + str(self.sr) +\
                     'm\n\tpck_start\n\ttimer_get a' +\
                     '\n\tpck_add a\n\tpck_add p\n\tpck_add c\n\tpck_end\nendloop\n' + \
@@ -228,7 +268,7 @@ class LSV:
 class OCP:
     '''
     '''
-    def __init__(self, ttot, dt, folder, fileName, header, path_lib=None):
+    def __init__(self, ttot, dt, folder, fileName, header, path_lib=None, **kwargs):
         dt = int(dt*1000)
         ttot = int(ttot*1000)
         self.text = ''

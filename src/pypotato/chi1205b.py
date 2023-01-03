@@ -12,6 +12,7 @@ class Info:
     '''
     def __init__(self):
         self.tech = ['CV', 'CA', 'LSV', 'OCP']
+        self.options = ['Quiet time in s (qt)']
 
         self.E_min = -2.4
         self.E_max = 2.4
@@ -30,20 +31,28 @@ class Info:
                             units  + ' and ' + str(high) + ' ' + units +\
                             '. Received ' + str(val) + ' ' + units)
 
-    def techniques(self):
+    def specifications(self):
         print('Model: CH Instruments 1205b (chi1205b)')
         print('Techiques available:', self.tech)
+        print('Options available:', self.options)
 
-    def specifications(self):
-        print('Specifications list')
 
 
 class CV:
+    '''
+        **kwargs:
+            qt # s, quite time
+    '''
     def __init__(self, Eini, Ev1, Ev2, Efin, sr, dE, nSweeps, sens, 
-                 folder, fileName, header, path_lib, qt=2, resistance=0):
+                 folder, fileName, header, path_lib, **kwargs):
         self.fileName = fileName
         self.folder = folder
         self.text = '' 
+
+        if 'qt' in kwargs:
+            qt = kwargs.get('qt')
+        else:
+            qt = 2
 
         self.validate(Eini, Ev1, Ev2, Efin, sr, dE, nSweeps, sens)
 
@@ -66,10 +75,6 @@ class CV:
                     str(el) + '\npn=' + pn + '\ncl=' + str(nSweeps) + \
                     '\nefon\nef=' + str(Efin) + '\nsi=' + str(dE) + \
                     '\nqt=' + str(qt) + '\nv=' + str(sr) + '\nsens=' + str(sens)
-        if resistance: # In case IR compensation is required
-            self.body2 = self.body + '\nmir=' + str(resistance) + \
-                         '\nircompon\nrun\nircompoff\nsave:' + self.fileName + \
-                         '\ntsave:' + self.fileName
         else:
             self.body2 = self.body + '\nrun\nsave:' + self.fileName + \
                          '\ntsave:' + self.fileName 
@@ -90,12 +95,19 @@ class CV:
 
 class LSV:
     '''
+        **kwargs:
+            qt # s, quiet time
     '''
     def __init__(self, Eini, Efin, sr, dE, sens, folder, fileName, header,
-                 path_lib, qt=2):
+                 path_lib, **kwargs):
         self.fileName = fileName
         self.folder = folder
         self.text = ''
+
+        if 'qt' in kwargs:
+            qt = kwargs.get('qt')
+        else:
+            qt = 2
 
         self.validate(Eini, Efin, sr, dE, sens)
 
@@ -122,12 +134,20 @@ class LSV:
 
 class CA:
     '''
+        **kwargs:
+            qt # s, quite time
     '''
     def __init__(self, Estep, dt, ttot, sens, folder, fileName, header, 
-                 path_lib, qt=2):
+                 path_lib, **kwargs):
         self.fileName = fileName
         self.folder = folder
         self.text = ''
+
+        if 'qt' in kwargs:
+            qt = kwargs.get('qt')
+        else:
+            qt = 2
+
         self.head = 'C\x02\0\0\nfolder: ' + folder + '\nfileoverride\n' + \
                     'header: ' + header + '\n\n'
         self.body = 'tech=i-t\nei=' + str(Estep) + '\nst=' + str(ttot) + \
@@ -153,11 +173,18 @@ class CA:
 
 class OCP:
     '''
-        Assumes OCP is between +- 10 V
+        Assumes OCP is between +- 5 V
+        **kwargs:
+            qt # s, quite time
     '''
     def __init__(self, ttot, dt, folder, fileName, header, path_lib):
         self.ttot = ttot
         self.dt = dt
+
+        if 'qt' in kwargs:
+            qt = kwargs.get('qt')
+        else:
+            qt = 2
 
         self.validate(ttot, dt)
 
@@ -167,7 +194,7 @@ class OCP:
         self.head = 'C\x02\0\0\nfolder: ' + folder + '\nfileoverride\n' + \
                     'header: ' + header + '\n\n'
         self.body = 'tech=ocpt\nst=' + str(ttot) + '\neh=5' + \
-                    '\nel=-5' + '\nsi=' + str(dt) + \
+                    '\nel=-5' + '\nsi=' + str(dt) + '\nqt=' + str(qt) +\
                     '\nrun\nsave:' + self.fileName + '\ntsave:' + self.fileName 
         self.foot = '\nforcequit: yesiamsure\n'
         self.text = self.head + self.body + self.foot
