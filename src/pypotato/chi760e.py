@@ -5,10 +5,35 @@ class Test:
         print('Test from chi760e module')
 
 class Info:
+    def __init__(self):
+        self.tech = ['CV', 'CA', 'LSV', 'OCP', 'NPV', 'EIS']
+
+        self.E_min = -10
+        self.E_max = 10
+        sel.sr_min = 0.000001
+        self.sr_max = 10000
+        #self.dE_min = 
+        #self.sr_min = 
+        #self.dt_min = 
+        #self.dt_max = 
+        #self.ttot_min = 
+        #self.ttot_max = 
+        self.freq_min = 0.00001
+        self.freq_max = 1000000
+
+    def limits(self, val, low, high, label, units):
+        if val < low or val > high:
+            raise Exception(label + ' should be between ' + str(low) + ' ' +\
+                            units  + ' and ' + str(high) + ' ' + units +\
+                            '. Received ' + str(val) + ' ' + units)
+
     def techniques(self):
-        techniques = ['CV', 'CA', 'LSV', 'OCP', 'NPV', 'EIS']
-        print('Model: CH Instruments 760E (chi760e)')
-        print('Techiques available:', techniques)
+        print('Model: CH Instruments 760e (chi760e)')
+        print('Techiques available:', self.tech)
+
+    def specifications(self):
+        print('Specifications list')
+
 
 
 class CV:
@@ -17,6 +42,9 @@ class CV:
         self.fileName = fileName
         self.folder = folder
         self.text = '' 
+
+        self.validate(Eini, Ev1, Ev2, Efin, sr, dE, nSweeps, sens)
+
         # correcting parameters:
         Ei = Eini
         if Ev1 > Ev2:
@@ -47,11 +75,27 @@ class CV:
         self.text = self.head + self.body2 + self.foot
 
     def bipot(self, E2, sens2):
+        # Validate bipot:
+        info = Info()
+        info.limits(E2, info.E_min, info.E_max, 'E2', 'V')
+        #info.limits(sens2, info.sens_min, info.sens_max, 'sens', 'A/V')
+
         self.body2 = self.body + \
                     '\ne2=' + str(E2) + '\nsens2=' + str(sens2) + '\ni2on' + \
                     '\nrun\nsave:' + self.fileName + '\ntsave:' + self.fileName 
         self.foot = '\n forcequit: yesiamsure\n'
         self.text = self.head + self.body2 + self.foot
+
+    def validate(self, Eini, Ev1, Ev2, Efin, sr, dE, nSweeps, sens):
+        info = Info()
+        info.limits(Eini, info.E_min, info.E_max, 'Eini', 'V')
+        info.limits(Ev1, info.E_min, info.E_max, 'Ev1', 'V')
+        info.limits(Ev2, info.E_min, info.E_max, 'Ev2', 'V')
+        info.limits(Efin, info.E_min, info.E_max, 'Efin', 'V')
+        info.limits(sr, info.sr_min, info.sr_max, 'sr', 'V/s')
+        #info.limits(dE, info.dE_min, info.dE_max, 'dE', 'V')
+        #info.limits(sens, info.sens_min, info.sens_max, 'sens', 'A/V')
+        print('All the parameters are valid')
 
 
 
@@ -63,6 +107,9 @@ class LSV:
         self.fileName = fileName
         self.folder = folder
         self.text = ''
+        
+        self.validate(Eini, Efin, sr, dE, sens)
+
         self.head = 'C\x02\0\0\nfolder: ' + folder + '\nfileoverride\n' + \
                     'header: ' + header + '\n\n'
         self.body = 'tech=lsv\nei=' + str(Eini) + '\nef=' + str(Efin) + \
@@ -74,11 +121,25 @@ class LSV:
         self.text = self.head + self.body2 + self.foot
 
     def bipot(self, E2, sens2):
+        # Validate bipot:
+        info.limits(E2, info.E_min, info.E_max, 'E2', 'V')
+        #info.limits(sens2, info.sens_min, info.sens_max, 'sens', 'A/V')
+
         self.body2 = self.body + \
                     '\ne2=' + str(E2) + '\nsens2=' + str(sens2) + '\ni2on' + \
                     '\nrun\nsave:' + self.fileName + '\ntsave:' + self.fileName 
         self.foot = '\n forcequit: yesiamsure\n'
         self.text = self.head + self.body2 + self.foot
+
+    def validate(self, Eini, Efin, sr, dE, sens):
+        info = Info()
+        info.limits(Eini, info.E_min, info.E_max, 'Eini', 'V')
+        info.limits(Efin, info.E_min, info.E_max, 'Efin', 'V')
+        info.limits(sr, info.sr_min, info.sr_max, 'sr', 'V/s')
+        #info.limits(dE, info.dE_min, info.dE_max, 'dE', 'V')
+        #info.limits(sens, info.sens_min, info.sens_max, 'sens', 'A/V')
+        print('All the parameters are valid')
+
 
 
 class NPV():
@@ -87,6 +148,11 @@ class NPV():
         self.fileName = fileName
         self.folder = folder
         self.text = ''
+
+        print('NPV technique still in development. Use with caution.')
+
+        self.validate(Eini, Efin, dE, tsample, twidth, tperiod, sens)
+
         self.head = 'C\x02\0\0\nfolder: ' + folder + '\n' + fileOverride + \
                     'header: ' + header + '\n\n'
         self.body = 'tech=NPV\nei=' + str(Eini) + '\nef=' + str(Efin) + \
@@ -97,6 +163,15 @@ class NPV():
                     '\nrun\nsave:' + fileName + '\ntsave:' + fileName 
         self.foot = '\n forcequit: yesiamsure\n'
         self.text = self.head + self.body + self.foot
+
+    def validate(self, Eini, Efin, dE, tsample, twidth, tperiod, sens):
+        info = Info()
+        info.limits(Eini, info.E_min, info.E_max, 'Eini', 'V')
+        info.limits(Efin, info.E_min, info.E_max, 'Efin', 'V')
+        #info.limits(tsample, info.tsample)
+        #info.limits(dE, info.dE_min, info.dE_max, 'dE', 'V')
+        #info.limits(sens, info.sens_min, info.sens_max, 'sens', 'A/V')
+        print('All the parameters are valid')
 
 
 class CA:
@@ -117,7 +192,25 @@ class CA:
         self.foot = '\n forcequit: yesiamsure\n'
         self.text = self.head + self.body2 + self.foot
 
+        self.validate(Estep, dt, ttot, sens)
+
+
+    def validate(self, Estep, dt, ttot, sens):
+        info = Info()
+        info.limits(Estep, info.E_min, info.E_max, 'Estep', 'V')
+        #info.limits(dt, info.dt_min, info.dt_max, 'dt', 's')
+        #info.limits(ttot, info.ttot_min, info.ttot_max, 'ttot', 's')
+        #info.limits(sens, info.sens_min, info.sens_max, 'sens', 'A/V')
+        print('All the parameters are valid')
+
+
+
+
     def bipot(self, E2, sens2):
+        # Validate bipot:
+        info = Info()
+        info.limits(E2, info.E_min, info.E_max, 'E2', 'V')
+        #info.limits(sens2, info.sens_min, info.sens_max, 'sens2', 'A/V')
         self.body2 = self.body + \
                     '\ne2=' + str(E2) + '\nsens2=' + str(sens2) + '\ni2on' + \
                     '\nrun\nsave:' + self.fileName + '\ntsave:' + self.fileName 
@@ -142,13 +235,22 @@ class OCP:
         self.foot = '\nforcequit: yesiamsure\n'
         self.text = self.head + self.body + self.foot
 
+        self.validate(ttot, dt)
 
+    def validate(self, ttot, dt):
+        info = Info()
+        #info.limits(dt, info.dt_min, info.dt_max, 'dt', 's')
+        #info.limits(ttot, info.ttot_min, info.ttot_max, 'ttot', 's')
+        print('All the parameters are valid')
 
 class EIS:
     '''
+        Pending:
+        * Validate parameters
     '''
     def __init__(self, Eini, low_freq, high_freq, amplitude, sens, qt, folder, 
                  fileName, header, path_lib):
+        print('EIS technique is still in development. Use with caution.')
         self.fileName = fileName
         self.folder = folder
         self.text = ''
