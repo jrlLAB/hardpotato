@@ -36,7 +36,7 @@ class Info:
                             '. Received ' + str(val) + ' ' + units)
 
     def specifications(self):
-        print('Model: CH Instruments 760e (chi760e)')
+        print('Model: CH Instruments 760E (chi760e)')
         print('Techiques available:', self.tech)
         print('Options available:', self.options)
 
@@ -114,8 +114,6 @@ class CV:
         info.limits(sr, info.sr_min, info.sr_max, 'sr', 'V/s')
         #info.limits(dE, info.dE_min, info.dE_max, 'dE', 'V')
         #info.limits(sens, info.sens_min, info.sens_max, 'sens', 'A/V')
-        print('All the parameters are valid')
-
 
 
 class LSV:
@@ -153,10 +151,7 @@ class LSV:
         else:
             self.body2 = self.body + '\nrun\nsave:' + self.fileName + \
                          '\ntsave:' + self.fileName 
- 
-        #self.body2 = self.body + \
-                    #'\nrun\nsave:' + self.fileName + '\ntsave:' + self.fileName 
-        self.foot = '\n forcequit: yesiamsure\n'
+         self.foot = '\n forcequit: yesiamsure\n'
         self.text = self.head + self.body2 + self.foot
 
     def bipot(self, E, sens):
@@ -178,7 +173,6 @@ class LSV:
         info.limits(sr, info.sr_min, info.sr_max, 'sr', 'V/s')
         #info.limits(dE, info.dE_min, info.dE_max, 'dE', 'V')
         #info.limits(sens, info.sens_min, info.sens_max, 'sens', 'A/V')
-        print('All the parameters are valid')
 
 
 
@@ -216,7 +210,6 @@ class NPV():
         #info.limits(tsample, info.tsample)
         #info.limits(dE, info.dE_min, info.dE_max, 'dE', 'V')
         #info.limits(sens, info.sens_min, info.sens_max, 'sens', 'A/V')
-        print('All the parameters are valid')
 
 
 class CA:
@@ -249,9 +242,6 @@ class CA:
         else:
             self.body2 = self.body + '\nrun\nsave:' + self.fileName + \
                          '\ntsave:' + self.fileName 
-
-        #self.body2 = self.body + \
-        #            '\nrun\nsave:' + self.fileName + '\ntsave:' + self.fileName 
         self.foot = '\n forcequit: yesiamsure\n'
         self.text = self.head + self.body2 + self.foot
 
@@ -264,10 +254,6 @@ class CA:
         #info.limits(dt, info.dt_min, info.dt_max, 'dt', 's')
         #info.limits(ttot, info.ttot_min, info.ttot_max, 'ttot', 's')
         #info.limits(sens, info.sens_min, info.sens_max, 'sens', 'A/V')
-        print('All the parameters are valid')
-
-
-
 
     def bipot(self, E, sens):
         # Validate bipot:
@@ -314,7 +300,6 @@ class OCP:
         info = Info()
         #info.limits(dt, info.dt_min, info.dt_max, 'dt', 's')
         #info.limits(ttot, info.ttot_min, info.ttot_max, 'ttot', 's')
-        print('All the parameters are valid')
 
 class EIS:
     '''

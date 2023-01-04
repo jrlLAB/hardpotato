@@ -32,7 +32,7 @@ class Info:
                             '. Received ' + str(val) + ' ' + units)
 
     def specifications(self):
-        print('Model: CH Instruments 1205b (chi1205b)')
+        print('Model: CH Instruments 1205B (chi1205b)')
         print('Techiques available:', self.tech)
         print('Options available:', self.options)
 

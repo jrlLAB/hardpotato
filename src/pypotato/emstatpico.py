@@ -101,7 +101,6 @@ class CV:
         #info.limits(sr, info.sr_min, info.sr_max, 'sr', 'V/s')
         #info.limits(dE, info.dE_min, info.dE_max, 'dE', 'V')
         #info.limits(sens, info.sens_min, info.sens_max, 'sens', 'A/V')
-        print('All the parameters are valid')
 
     def bipot(self, E, sens):
         # Validate bipot:
@@ -169,7 +168,6 @@ class CA:
         #info.limits(dt, info.dt_min, info.dt_max, 'dt', 's')
         #info.limits(ttot, info.ttot_min, info.ttot_max, 'ttot', 's')
         #info.limits(sens, info.sens_min, info.sens_max, 'sens', 'A/V')
-        print('All the parameters are valid')
 
 
     def bipot(self, E, sens):
@@ -262,8 +260,6 @@ class LSV:
         #info.limits(sr, info.sr_min, info.sr_max, 'sr', 'V/s')
         #info.limits(dE, info.dE_min, info.dE_max, 'dE', 'V')
         #info.limits(sens, info.sens_min, info.sens_max, 'sens', 'A/V')
-        print('All the parameters are valid')
-
 
 
 class OCP:
@@ -287,5 +283,4 @@ class OCP:
         info = Info()
         #info.limits(dt, info.dt_min, info.dt_max, 'dt', 's')
         #info.limits(ttot, info.ttot_min, info.ttot_max, 'ttot', 's')
-        print('All the parameters are valid')
 
