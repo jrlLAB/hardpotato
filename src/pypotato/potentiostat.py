@@ -1,10 +1,10 @@
 import os
 import numpy as np
 import matplotlib.pyplot as plt
+import softpotato as sp
 
 import pypotato.load_data as load_data
 import pypotato.save_data as save_data
-import pypotato.softpotato as sp
 import pypotato.chi760e as chi760e
 import pypotato.chi1205b as chi1205b
 import pypotato.emstatpico as emstatpico
@@ -44,8 +44,8 @@ class Info:
             print('Potentiostat model not available in the library.')
             print('Available models:', models_available)
 
-    def techniques(self):
-        self.info.techniques()
+    def specifications(self):
+        self.info.specifications()
 
 class Setup:
     def __init__(self, model=0, path='.', folder='.', port=None, verbose=1):

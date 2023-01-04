@@ -1,6 +1,6 @@
 import potentiostat
 
-model = 'chi760e'
+model = 'chi1205b'
 path = '.'
 folder = 'data'
 

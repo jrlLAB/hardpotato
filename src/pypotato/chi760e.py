@@ -18,7 +18,7 @@ class Info:
 
         self.E_min = -10
         self.E_max = 10
-        sel.sr_min = 0.000001
+        self.sr_min = 0.000001
         self.sr_max = 10000
         #self.dE_min = 
         #self.sr_min = 
@@ -97,7 +97,7 @@ class CV:
         # Validate bipot:
         info = Info()
         info.limits(E, info.E_min, info.E_max, 'E2', 'V')
-        #info.limits(sens, info.sens_min, info.sens_max, 'sens', 'A/V')
+        #info.limits(sens, info.senC:\Users\oliverrz\Desktop\CHI\chi760es_min, info.sens_max, 'sens', 'A/V')
 
         self.body2 = self.body + \
                     '\ne2=' + str(E) + '\nsens2=' + str(sens) + '\ni2on' + \
@@ -155,12 +155,13 @@ class LSV:
                          '\ntsave:' + self.fileName 
  
         #self.body2 = self.body + \
-                    '\nrun\nsave:' + self.fileName + '\ntsave:' + self.fileName 
+                    #'\nrun\nsave:' + self.fileName + '\ntsave:' + self.fileName 
         self.foot = '\n forcequit: yesiamsure\n'
         self.text = self.head + self.body2 + self.foot
 
     def bipot(self, E, sens):
         # Validate bipot:
+        info = Info()
         info.limits(E, info.E_min, info.E_max, 'E2', 'V')
         #info.limits(sens, info.sens_min, info.sens_max, 'sens', 'A/V')
 

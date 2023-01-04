@@ -75,8 +75,7 @@ class CV:
                     str(el) + '\npn=' + pn + '\ncl=' + str(nSweeps) + \
                     '\nefon\nef=' + str(Efin) + '\nsi=' + str(dE) + \
                     '\nqt=' + str(qt) + '\nv=' + str(sr) + '\nsens=' + str(sens)
-        else:
-            self.body2 = self.body + '\nrun\nsave:' + self.fileName + \
+        self.body2 = self.body + '\nrun\nsave:' + self.fileName + \
                          '\ntsave:' + self.fileName 
         self.foot = '\n forcequit: yesiamsure\n'
         self.text = self.head + self.body2 + self.foot
@@ -177,7 +176,7 @@ class OCP:
         **kwargs:
             qt # s, quite time
     '''
-    def __init__(self, ttot, dt, folder, fileName, header, path_lib):
+    def __init__(self, ttot, dt, folder, fileName, header, path_lib, **kwargs):
         self.ttot = ttot
         self.dt = dt
 

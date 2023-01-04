@@ -13,7 +13,7 @@ class Info:
     def __init__(self):
         self.tech = ['CV', 'CA', 'LSV', 'OCP']
         self.options = [
-                        'Potentiostat mode (low_speed, high_speed, max_range)',
+                        'mode (low_speed, high_speed, max_range)',
                         ]
 
         self.E_min = -1.7
@@ -39,7 +39,7 @@ class Info:
         print('Options available:', self.options)
 
 
- def get_mode(self, val):
+def get_mode(self, val):
     if val == 'low_speed':
         return 2
     elif val == 'high_speed':
@@ -72,16 +72,16 @@ class CV:
         self.text = ''
 
         if 'mode' in kwargs:
-            mode = kwargs.get('mode')
-            mode = get_mode(mode)
+            self.mode = kwargs.get('mode')
+            self.mode = get_mode(mode)
         else:
-            mode = 4 # Defaults to max_range
+            self.mode = 4 # Defaults to max_range
 
         self.validate(Eini, Ev1, Ev2, Efin, sr, dE, nSweeps, sens)
 
 
         self.ini = 'e\nvar c\nvar p\nvar a\n'
-        self.pre_body = 'set_pgstat_mode ' str(self.mode) +\
+        self.pre_body = 'set_pgstat_mode ' + str(self.mode) +\
                         '\nset_autoranging ba 100n 5m' +\
                         '\nset_e '+ str(self.Eini) + 'm\ncell_on\nwait 2\ntimer_start'
         self.body = '\nmeas_loop_cv p c ' + str(self.Eini) + 'm ' +\
@@ -92,7 +92,7 @@ class CV:
                     'on_finished:\ncell_off\n\n'
         self.text = self.ini + self.pre_body + self.body
 
-     def validate(self, Eini, Ev1, Ev2, Efin, sr, dE, nSweeps, sens):
+    def validate(self, Eini, Ev1, Ev2, Efin, sr, dE, nSweeps, sens):
         info = Info()
         info.limits(Eini, info.E_min, info.E_max, 'Eini', 'V')
         info.limits(Ev1, info.E_min, info.E_max, 'Ev1', 'V')
@@ -145,15 +145,15 @@ class CA:
         self.text = ''
 
         if 'mode' in kwargs:
-            mode = kwargs.get('mode')
-            mode = get_mode(mode)
+            self.mode = kwargs.get('mode')
+            self.mode = get_mode(mode)
         else:
-            mode = 4 # Defaults to max_range
+            self.mode = 4 # Defaults to max_range
 
         self.validate(Estep, dt, ttot, sens)
 
         self.ini = 'e\nvar p\nvar c\nvar a\n'
-        self.pre_body = 'set_pgstat_mode ' str(self.mode) +\
+        self.pre_body = 'set_pgstat_mode ' + str(self.mode) +\
                         '\nset_autoranging ba 100n 5m' +\
                         '\nset_e ' + str(self.Estep) + 'm\ncell_on\ntimer_start'
         self.body = '\nmeas_loop_ca p c ' + str(self.Estep) + 'm ' + str(self.dt) +\
@@ -211,16 +211,16 @@ class LSV:
         self.text = ''
 
         if 'mode' in kwargs:
-            mode = kwargs.get('mode')
-            mode = get_mode(mode)
+            self.mode = kwargs.get('mode')
+            self.mode = get_mode(mode)
         else:
-            mode = 4 # Defaults to max_range
+            self.mode = 4 # Defaults to max_range
 
 
         self.validate(Eini, Efin, sr, dE, sens)
 
         self.ini = 'e\nvar c\nvar p\nvar a\n'
-        self.pre_body = 'set_pgstat_mode ' str(self.mode) +\
+        self.pre_body = 'set_pgstat_mode ' + str(self.mode) +\
                         '\nset_autoranging ba 100n 5m' +\
                         '\nset_e '+ str(self.Eini) + 'm\ncell_on\ntimer_start'
         self.body = '\nmeas_loop_lsv p c ' + str(self.Eini) +\
@@ -233,6 +233,7 @@ class LSV:
 
     def bipot(self, E, sens):
         # Validate bipot:
+        info = Info()
         info.limits(E, info.E_min, info.E_max, 'E2', 'V')
         #info.limits(sens2, info.sens_min, info.sens_max, 'sens', 'A/V')
 
