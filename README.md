@@ -100,7 +100,7 @@ code is in the [PalmSens MethodScript GitHub account](https://github.com/PalmSen
 * This development is funded by the Joint Center for Energy Storage Research ([JCESR](https://www.jcesr.org/)).
 
 # Authors
-Pypotato was developed at the [Beckman Institute](https://beckman.illinois.edu/), University of Illinois at Urbana-Champaign, 2021-2023 by:
+Pypotato was developed at the [Beckman Institute](https://beckman.illinois.edu/), University of Illinois at Urbana-Champaign, Feb 2021 to Jan 2023 by:
 
 * Lead: Oliver Rodriguez ([oliverrdz.xyz](https://oliverrdz.xyz))
 * Support: Michael Pence (mapence2@illinois.edu)
