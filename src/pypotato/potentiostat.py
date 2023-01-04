@@ -7,7 +7,7 @@ import pypotato.load_data as load_data
 import pypotato.save_data as save_data
 import pypotato.chi760e as chi760e
 import pypotato.chi1205b as chi1205b
-import pypotato.chi610e as chi601e
+import pypotato.chi601e as chi601e
 import pypotato.chi1242b as chi1242b
 import pypotato.emstatpico as emstatpico
 
@@ -47,7 +47,7 @@ class Info:
         elif self.model == 'emstatpico':
             self.info = emstatpico.Info()
         else:
-            print('Potentiostat model ' + model ' not available in the library.')
+            print('Potentiostat model ' + model + ' not available in the library.')
             print('Available models:', models_available)
 
     def specifications(self):

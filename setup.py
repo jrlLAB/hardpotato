@@ -6,7 +6,7 @@ def readme():
 
 setup(
     name='pypotato',
-    version='1.3.2',
+    version='1.3.6',
     description='Python API to control programmable potentiostats.',
     long_description=readme(),
     long_description_content_type="text/markdown",
