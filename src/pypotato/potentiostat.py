@@ -1,16 +1,17 @@
 import os
 import numpy as np
 import matplotlib.pyplot as plt
-import load_data as load_data
-import save_data as save_data
-import softpotato as sp
-import chi760e as chi760e
-import chi1205b as chi1205b
-import emstatpico as emstatpico
 
-import pico_instrument as instrument
-import pico_mscript as mscript
-import pico_serial as serial
+import pypotato.load_data as load_data
+import pypotato.save_data as save_data
+import pypotato.softpotato as sp
+import pypotato.chi760e as chi760e
+import pypotato.chi1205b as chi1205b
+import pypotato.emstatpico as emstatpico
+
+import pypotato.pico_instrument as instrument
+import pypotato.pico_mscript as mscript
+import pypotato.pico_serial as serial
 
 # Potentiostat models available: 
 models_available = ['chi1205b', 'chi760e', 'emstatpico']
