@@ -29,7 +29,6 @@ class Read:
                 self.x = np.array([])
                 self.y = np.array([])
         elif model == 'emstatpico':
-            #print('pico')
             self.data = np.loadtxt(self.file_path, delimiter=self.delimiter)
             self.t = self.data[:,0]
             self.E = self.data[:,1]
@@ -69,7 +68,6 @@ class CV(Read):
     '''
     '''
     def __init__(self, fileName='file', folder='.', model=0):
-        #print(model)
         self.fileName = fileName
         self.folder = folder
         text = 'Potential/V,'

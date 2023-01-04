@@ -2,7 +2,7 @@ class Test:
     '''
     '''
     def __init__(self):
-        print('Test from chi1205b translator')
+        print('Test from chi1242b translator')
 
 
 class Info:
@@ -32,7 +32,7 @@ class Info:
                             '. Received ' + str(val) + ' ' + units)
 
     def specifications(self):
-        print('Model: CH Instruments 1205B (chi1205b)')
+        print('Model: CH Instruments 1242B (chi1242b)')
         print('Techiques available:', self.tech)
         print('Options available:', self.options)
 
@@ -80,6 +80,18 @@ class CV:
         self.foot = '\n forcequit: yesiamsure\n'
         self.text = self.head + self.body2 + self.foot
 
+    def bipot(self, E, sens):
+        # Validate bipot:
+        info = Info()
+        info.limits(E, info.E_min, info.E_max, 'E2', 'V')
+        #info.limits(sens, info.senC:\Users\oliverrz\Desktop\CHI\chi760es_min, info.sens_max, 'sens', 'A/V')
+
+        self.body2 = self.body + \
+                    '\ne2=' + str(E) + '\nsens2=' + str(sens) + '\ni2on' + \
+                    '\nrun\nsave:' + self.fileName + '\ntsave:' + self.fileName 
+        self.foot = '\n forcequit: yesiamsure\n'
+        self.text = self.head + self.body2 + self.foot
+
     def validate(self, Eini, Ev1, Ev2, Efin, sr, dE, nSweeps, sens):
         info = Info()
         info.limits(Eini, info.E_min, info.E_max, 'Eini', 'V')
@@ -89,7 +101,6 @@ class CV:
         info.limits(sr, info.sr_min, info.sr_max, 'sr', 'V/s')
         #info.limits(dE, info.dE_min, info.dE_max, 'dE', 'V')
         #info.limits(sens, info.sens_min, info.sens_max, 'sens', 'A/V')
-        print('All the parameters are valid')
 
 
 class LSV:
@@ -127,9 +138,18 @@ class LSV:
         info.limits(sr, info.sr_min, info.sr_max, 'sr', 'V/s')
         #info.limits(dE, info.dE_min, info.dE_max, 'dE', 'V')
         #info.limits(sens, info.sens_min, info.sens_max, 'sens', 'A/V')
-        print('All the parameters are valid')
 
+    def bipot(self, E, sens):
+        # Validate bipot:
+        info = Info()
+        info.limits(E, info.E_min, info.E_max, 'E2', 'V')
+        #info.limits(sens, info.sens_min, info.sens_max, 'sens', 'A/V')
 
+        self.body2 = self.body + \
+                    '\ne2=' + str(E) + '\nsens2=' + str(sens) + '\ni2on' + \
+                    '\nrun\nsave:' + self.fileName + '\ntsave:' + self.fileName 
+        self.foot = '\n forcequit: yesiamsure\n'
+        self.text = self.head + self.body2 + self.foot
 
 class CA:
     '''
@@ -166,7 +186,17 @@ class CA:
         #info.limits(dt, info.dt_min, info.dt_max, 'dt', 's')
         #info.limits(ttot, info.ttot_min, info.ttot_max, 'ttot', 's')
         #info.limits(sens, info.sens_min, info.sens_max, 'sens', 'A/V')
-        print('All the parameters are valid')
+
+    def bipot(self, E, sens):
+        # Validate bipot:
+        info = Info()
+        info.limits(E, info.E_min, info.E_max, 'E2', 'V')
+        #info.limits(sens, info.sens_min, info.sens_max, 'sens2', 'A/V')
+        self.body2 = self.body + \
+                    '\ne2=' + str(E) + '\nsens2=' + str(sens) + '\ni2on' + \
+                    '\nrun\nsave:' + self.fileName + '\ntsave:' + self.fileName 
+        self.foot = '\n forcequit: yesiamsure\n'
+        self.text = self.head + self.body2 + self.foot
 
 
 
@@ -202,5 +232,4 @@ class OCP:
         info = Info()
         #info.limits(dt, info.dt_min, info.dt_max, 'dt', 's')
         #info.limits(ttot, info.ttot_min, info.ttot_max, 'ttot', 's')
-        print('All the parameters are valid')
 

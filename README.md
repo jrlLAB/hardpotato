@@ -10,8 +10,10 @@ between researchers and groups that own different potentiostats.
 
 Currently, the following potentiostats are included in the library:
 
+* CHI1205B from CH Instruments (chi1205b)
+* CHI1242B from CH Instruments (chi1242b)
+* CHI601E from CH Instruments (chi601e)
 * CHI760E from CH Instruments (chi760e)
-* CHI1205b from CH Instruments (chi1205b)
 * Emstat Pico from PalmSens (emstatpico)
 
 with the following techniques:
@@ -20,7 +22,7 @@ with the following techniques:
 * Linear sweep voltammetry, LSV
 * Open circuit potential, OCP
 
-For the CHI760E only (so far):
+For the CHI601E and CHI760E only:
 * Normal pulse voltammetry, NPV
 
 # Installation
@@ -80,7 +82,8 @@ external software is required. Because of this, there is no live plotting, howev
 the data and plots are saved when the measurement is finished.
 * Scripts written for the pico may also work in other operating systems, provided
 the library is installed correctly. So far, pypotato with the Pico has been 
-tested in Windows 10 and Manjaro Linux with kernel 5.15.xx. 
+tested in Windows 10 and Manjaro Linux with kernel 5.15.xx; it has not been tested 
+with MacOS although it should work. 
 
 # Requirements
 * numpy for data handling
@@ -97,8 +100,8 @@ code is in the [PalmSens MethodScript GitHub account](https://github.com/PalmSen
 * This development is funded by the Joint Center for Energy Storage Research ([JCESR](https://www.jcesr.org/)).
 
 # Authors
-Pypotato was developed at the [Beckman Institute](https://beckman.illinois.edu/), University of Illinois at Urbana-Champaign by:
+Pypotato was developed at the [Beckman Institute](https://beckman.illinois.edu/), University of Illinois at Urbana-Champaign, 2021-2023 by:
 
 * Lead: Oliver Rodriguez ([oliverrdz.xyz](https://oliverrdz.xyz))
-* Support: Michael Pence
+* Support: Michael Pence (mapence2@illinois.edu)
 * PI: Joaquin Rodriguez-Lopez (joaquinr@illinois.edu)
