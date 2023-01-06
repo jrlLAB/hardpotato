@@ -1,4 +1,4 @@
-import pypotato as pp
+import hardpotato as hp
 import numpy as np
 import matplotlib.pyplot as plt
 import softpotato as sp
@@ -16,7 +16,7 @@ path = 'C:/Users/oliverrz/Desktop/CHI/chi1205b_mini2/chi1205b.exe'
 # Folder where to save the data, it needs to be created previously
 folder = 'C:/Users/oliverrz/Desktop/data'
 # Initialization:
-pp.potentiostat.Setup(model, path, folder)
+hp.potentiostat.Setup(model, path, folder)
 
 
 ##### Experimental parameters:
@@ -36,11 +36,11 @@ i = []
 for x in range(nsr):
     # initialize experiment:
     fileName = 'CV_' + str(int(sr[x]*1000)) + 'mVs'# base file name for data file
-    cv = pp.potentiostat.CV(Eini, Ev1,Ev2, Efin, sr[x], dE, nSweeps, sens, fileName, header)
+    cv = hp.potentiostat.CV(Eini, Ev1,Ev2, Efin, sr[x], dE, nSweeps, sens, fileName, header)
     # Run experiment:
     cv.run()
     # load data to do the data analysis later
-    data = pp.load_data.CV(fileName + '.txt', folder, model)
+    data = hp.load_data.CV(fileName + '.txt', folder, model)
     i.append(data.i)
 i = np.array(i)
 i = i[:,:,0].T
