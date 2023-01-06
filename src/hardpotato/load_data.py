@@ -1,5 +1,5 @@
 import numpy as np
-import pypotato.chi760e as chi
+import hardpotato.chi760e as chi
 
 
 class Test:

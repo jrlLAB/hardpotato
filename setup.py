@@ -5,8 +5,8 @@ def readme():
         return f.read()
 
 setup(
-    name='pypotato',
-    version='1.3.6',
+    name='hardpotato',
+    version='1.3.7',
     description='Python API to control programmable potentiostats.',
     long_description=readme(),
     long_description_content_type="text/markdown",
@@ -14,7 +14,7 @@ setup(
     author_email='oliver.rdz@softpotato.xyz',
     packages=find_packages('src'),
     package_dir={'':'src'},
-    url='https://github.com/jrlLAB/pypotato',
+    url='https://github.com/jrlLAB/hardpotato',
     keywords='Electrochemistry',
     install_requires=[
     'numpy',

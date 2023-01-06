@@ -1,8 +1,8 @@
-# Pypotato library
-Welcome to the pypotato GitHub repository. Pypotato is an open source Python
+# Hard Potato library
+Welcome to the hardpotato GitHub repository. Hard Potato is an open source Python
 API to control commercially available potentiostats. It enables researchers to
 write Python scripts that can include experimentation, immediate data analysis
-using any third-party library and/or the control of other instruments. Pypotato
+using any third-party library and/or the control of other instruments. Hard Potato
 facilitates the standardization of electrochemical experiments by keeping a 
 record of the experiments and data analysis that can be later run again to ensure 
 repeatability. It also facilitates the sharing of electrochemical protocols 
@@ -28,14 +28,14 @@ For the CHI601E and CHI760E only:
 # Installation
 Open a console and type:
 ```python
-pip install pypotato
+pip install hardpotato
 ```
 
 # Example: techniques
-Here are quick examples on how to use the library. For more help check the [Wiki](https://github.com/jrlLAB/pypotato/wiki).
+Here are quick examples on how to use the library. For more help check the [Wiki](https://github.com/jrlLAB/hardpotato/wiki).
 
 ```python
-import pypotato as pp
+import hardpotato as hp
 
 # Potentiostat setup
 # Choose the correct model from ['chi760e', 'chi1205b', 'emstatpico']:
@@ -46,31 +46,31 @@ path = 'C:/Users/jrl/CHI/chi760e.exe' # This is ignored for the Pico
 # Write the path where the data and plots are going to be automatically saved:
 folder = 'C:/Users/jrl/Experiments/data'
 # Setup:
-pp.potentiostat.Setup(model, path, folder)
+hp.potentiostat.Setup(model, path, folder)
 
 # Run CV with default values:
-cv = pp.potentiostat.CV()
+cv = hp.potentiostat.CV()
 #cv.bipot() # uncomment to activate second working electrode
 cv.run()
 
 # Run a LSV with default values:
-lsv = pp.potentiostat.LSV()
+lsv = hp.potentiostat.LSV()
 #lsv.bipot() # uncomment to activate second working electrode
 lsv.run()
 
 # Run a CA with default values:
-ca = pp.potentiostat.CA()
+ca = hp.potentiostat.CA()
 #ca.bipot() # uncomment to activate second working electrode
 ca.run()
 
 # Run an OCP with default values:
-ocp = pp.potentiostat.OCP()
+ocp = hp.potentiostat.OCP()
 ocp.run()
 ```
 
 # Notes for CH Instruments users
 * Since the CHI potentiostat software only works in Windows, any script written with
-pypotato will only work in Windows.
+hardpotato will only work in Windows.
 * The CHI translators use macro commands that are only available in the most 
 recent versions of the software. Please contact CHI support for help on updating
 the potentiostat software and firmware.
@@ -81,7 +81,7 @@ the potentiostat software and firmware.
 external software is required. Because of this, there is no live plotting, however,
 the data and plots are saved when the measurement is finished.
 * Scripts written for the pico may also work in other operating systems, provided
-the library is installed correctly. So far, pypotato with the Pico has been 
+the library is installed correctly. So far, hardpotato with the Pico has been 
 tested in Windows 10 and Manjaro Linux with kernel 5.15.xx; it has not been tested 
 with MacOS although it should work. 
 
@@ -100,7 +100,7 @@ code is in the [PalmSens MethodScript GitHub account](https://github.com/PalmSen
 * This development is funded by the Joint Center for Energy Storage Research ([JCESR](https://www.jcesr.org/)).
 
 # Authors
-Pypotato was developed at the [Beckman Institute](https://beckman.illinois.edu/), University of Illinois at Urbana-Champaign, Feb 2021 to Jan 2023 by:
+Hard Potato was developed at the [Beckman Institute](https://beckman.illinois.edu/), University of Illinois at Urbana-Champaign, Feb 2021 to Jan 2023 by:
 
 * Lead: Oliver Rodriguez ([oliverrdz.xyz](https://oliverrdz.xyz))
 * Support: Michael Pence (mapence2@illinois.edu)

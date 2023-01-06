@@ -1,4 +1,4 @@
-import pypotato as pp
+import hardpotato as hp
 import softpotato as sp
 
 # Select the potentiostat model to use:
@@ -13,7 +13,7 @@ path = 'C:/Users/oliverrz/Desktop/CHI/chi1205b_mini2/chi1205b.exe'
 folder = 'C:/Users/oliverrz/Desktop/data'
 
 # Initialization:
-pp.potentiostat.Setup(model, path, folder)
+hp.potentiostat.Setup(model, path, folder)
 
 # Experimental parameters:
 Estep = 0.5     # V, step potential
@@ -26,12 +26,12 @@ fileName = 'CA' # base file name for data file
 header = 'CA'   # header for data file
 
 # Initialize experiment:
-ca = pp.potentiostat.CA(Estep, dt, ttot, sens, fileName, header)
+ca = hp.potentiostat.CA(Estep, dt, ttot, sens, fileName, header)
 # Run experiment:
 ca.run()
 
 # Load recently acquired data
-data = pp.load_data.CA(fileName +'.txt', folder, model)
+data = hp.load_data.CA(fileName +'.txt', folder, model)
 i = data.i
 t = data.t
 

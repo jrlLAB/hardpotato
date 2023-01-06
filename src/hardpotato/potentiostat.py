@@ -3,17 +3,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 import softpotato as sp
 
-import pypotato.load_data as load_data
-import pypotato.save_data as save_data
-import pypotato.chi760e as chi760e
-import pypotato.chi1205b as chi1205b
-import pypotato.chi601e as chi601e
-import pypotato.chi1242b as chi1242b
-import pypotato.emstatpico as emstatpico
+import hardpotato.load_data as load_data
+import hardpotato.save_data as save_data
+import hardpotato.chi760e as chi760e
+import hardpotato.chi1205b as chi1205b
+import hardpotato.chi601e as chi601e
+import hardpotato.chi1242b as chi1242b
+import hardpotato.emstatpico as emstatpico
 
-import pypotato.pico_instrument as instrument
-import pypotato.pico_mscript as mscript
-import pypotato.pico_serial as serial
+import hardpotato.pico_instrument as instrument
+import hardpotato.pico_mscript as mscript
+import hardpotato.pico_serial as serial
 
 # Potentiostat models available: 
 models_available = ['chi1205b', 'chi1242b', 'chi601e', 'chi760e', 'emstatpico']

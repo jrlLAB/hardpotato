@@ -1,6 +1,6 @@
 import numpy as np
 import softpotato as sp
-import pypotato.pico_mscript as mscript
+import hardpotato.pico_mscript as mscript
 
 class Test:
     '''

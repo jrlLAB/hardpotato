@@ -1,4 +1,4 @@
-import pypotato as pp
+import hardpotato as hp
 import softpotato as sp
 
 # Select the potentiostat model to use:
@@ -13,7 +13,7 @@ path = 'C:/Users/oliverrz/Desktop/CHI/chi1205b_mini2/chi1205b.exe'
 folder = 'C:/Users/oliverrz/Desktop/data'
 
 # Initialization:
-pp.potentiostat.Setup(model, path, folder)
+hp.potentiostat.Setup(model, path, folder)
 
 # Experimental parameters:
 Eini = -0.5     # V, initial potential
@@ -27,12 +27,12 @@ fileName = 'LSV'# base file name for data file
 header = 'LSV'  # header for data file
 
 # initialize experiment:
-lsv = pp.potentiostat.LSV(Eini, Efin, sr, dE, sens, fileName, header)
+lsv = hp.potentiostat.LSV(Eini, Efin, sr, dE, sens, fileName, header)
 # Run experiment:
 lsv.run()
 
 # Load recently acquired data
-data = pp.load_data.LSV(fileName +'.txt', folder, model)
+data = hp.load_data.LSV(fileName +'.txt', folder, model)
 i = data.i
 E = data.E
 

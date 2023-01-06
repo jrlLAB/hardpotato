@@ -1,4 +1,4 @@
-import pypotato as pp
+import hardpotato as hp
 import softpotato as sp
 
 # Select the potentiostat model to use:
@@ -13,7 +13,7 @@ path = 'C:/Users/oliverrz/Desktop/CHI/chi1205b_mini2/chi1205b.exe'
 folder = 'C:/Users/oliverrz/Desktop/data'
 
 # Initialization:
-pp.potentiostat.Setup(model, path, folder)
+hp.potentiostat.Setup(model, path, folder)
 
 # Experimental parameters:
 ttot = 1        # s, total time
@@ -22,12 +22,12 @@ fileName = 'OCP' # base file name for data file
 header = 'OCP'   # header for data file
 
 # initialize experiment:
-ocp = pp.potentiostat.OCP(ttot, dt, fileName, header)
+ocp = hp.potentiostat.OCP(ttot, dt, fileName, header)
 # Run experiment:
 ocp.run()
 
 # Load recently acquired data
-data = pp.load_data.OCP(fileName +'.txt', folder, model)
+data = hp.load_data.OCP(fileName +'.txt', folder, model)
 E = data.E
 t = data.t
 

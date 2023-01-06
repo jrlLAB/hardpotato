@@ -1,4 +1,4 @@
-from pypotato import *
+import hardpotato as hp
 import numpy as np
 import matplotlib.pyplot as plt
 import softpotato as sp
@@ -11,7 +11,7 @@ path = 'C:/Users/jrl/Desktop/CHI/chi760e/chi760e.exe'
 # Folder where to save the data, it needs to be created previously
 folder = 'C:/Users/jrl/echem/Data'
 # Initialization:
-potentiostat.Setup(model, path, folder)
+hp.potentiostat.Setup(model, path, folder)
 
 
 # Experimental parameters:
@@ -33,7 +33,7 @@ for x in range(nsr):
     # initialize experiment:
     fileName = 'CV_' + str(int(sr[x]*1000)) + 'mVs'# base file name for data file
     print(fileName)
-    cv = potentiostat.CV(Eini, Ev1,Ev2, Efin, sr[x], dE, nSweeps, sens, fileName, header)
+    cv = hp.potentiostat.CV(Eini, Ev1,Ev2, Efin, sr[x], dE, nSweeps, sens, fileName, header)
     # Include second working electrode in bipotentiostat mode.
     # Comment or delete the next line to remove bipot mode.
     #cv.bipot(E2,sens2)
