@@ -209,7 +209,7 @@ class LSV:
         self.text = ''
 
         if 'mode' in kwargs:
-            self.mode = kwargs.get('mode')
+            #self.mode = kwargs.get('mode')
             self.mode = get_mode(mode)
         else:
             self.mode = 4 # Defaults to max_range
