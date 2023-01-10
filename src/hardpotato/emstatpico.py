@@ -39,7 +39,7 @@ class Info:
         print('Options available:', self.options)
 
 
-def get_mode(self, val):
+def get_mode(val):
     if val == 'low_speed':
         return 2
     elif val == 'high_speed':
@@ -73,7 +73,7 @@ class CV:
 
         if 'mode' in kwargs:
             self.mode = kwargs.get('mode')
-            self.mode = get_mode(mode)
+            self.mode = get_mode(self.mode)
         else:
             self.mode = 4 # Defaults to max_range
 
@@ -145,7 +145,7 @@ class CA:
 
         if 'mode' in kwargs:
             self.mode = kwargs.get('mode')
-            self.mode = get_mode(mode)
+            self.mode = get_mode(self.mode)
         else:
             self.mode = 4 # Defaults to max_range
 
@@ -209,8 +209,8 @@ class LSV:
         self.text = ''
 
         if 'mode' in kwargs:
-            #self.mode = kwargs.get('mode')
-            self.mode = get_mode(mode)
+            self.mode = kwargs.get('mode')
+            self.mode = get_mode(self.mode)
         else:
             self.mode = 4 # Defaults to max_range
 
