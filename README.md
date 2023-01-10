@@ -102,6 +102,6 @@ code is in the [PalmSens MethodScript GitHub account](https://github.com/PalmSen
 # Authors
 Hard Potato was developed at the [Beckman Institute](https://beckman.illinois.edu/), University of Illinois at Urbana-Champaign, Feb 2021 to Jan 2023 by:
 
-* Lead: Oliver Rodriguez ([oliverrdz.xyz](https://oliverrdz.xyz))
+* Lead: Oliver Rodriguez ([oliverrdz.xyz](https://oliverrdz.xyz), oliver.rdz@softpotato.xyz)
 * Support: Michael Pence (mapence2@illinois.edu)
 * PI: Joaquin Rodriguez-Lopez (joaquinr@illinois.edu)
