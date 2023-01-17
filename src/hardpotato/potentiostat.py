@@ -38,7 +38,7 @@ class Info:
         self.model = model
         if self.model == 'chi1205b':
             self.info = chi1205b.Info()
-        if self.model == 'chi1242b':
+        elif self.model == 'chi1242b':
             self.info = chi1242b.Info()
         elif self.model == 'chi601e':
             self.info = chi601e.Info()
