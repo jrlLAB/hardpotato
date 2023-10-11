@@ -161,6 +161,10 @@ class Technique:
                 self.tech.bipot(E, sens)
                 self.text = self.tech.text
                 self.bpot = True
+            if model_pstat == 'chi1242b':
+                self.tech.bipot(E, sens)
+                self.text = self.tech.text
+                self.bpot = True
             elif model_pstat == 'emstatpico':
                 self.tech.bipot(E, sens)
                 self.text = self.tech.text
