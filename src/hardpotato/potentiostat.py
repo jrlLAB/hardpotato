@@ -2,6 +2,7 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 import softpotato as sp
+import subprocess
 
 import hardpotato.load_data as load_data
 import hardpotato.save_data as save_data
@@ -100,9 +101,9 @@ class Technique:
             # Write macro:
             self.writeToFile()
             # Run command:
-            command = path_lib #+ '/chi760e.exe'
-            param = ' /runmacro:\"' + folder_save + '/' + self.fileName + '.mcr\"'
-            os.system(command + param)
+            print('Running CV')
+            command = f'\"{path_lib}\"' + ' /runmacro:\"' + folder_save + '/' + self.fileName + '.mcr\"'
+            subprocess.run(command)
             self.message(start=False)
             self.plot()
         elif model_pstat == 'emstatpico':
