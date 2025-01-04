@@ -99,6 +99,9 @@ started from the Windows command line and for creating the Macros.
 code is in the [PalmSens MethodScript GitHub account](https://github.com/PalmSens/MethodSCRIPT_Examples).
 * This development is funded by the Joint Center for Energy Storage Research ([JCESR](https://www.jcesr.org/)).
 
+# Citation
+We have published a paper on Analytical Chemistry ([DOI:10.1021/acs.analchem.2c04862](https://doi.org/10.1021/acs.analchem.2c04862)). Please consider citing our work if you use Hard Potato.
+
 # Authors
 Hard Potato was developed at the [Beckman Institute](https://beckman.illinois.edu/), University of Illinois at Urbana-Champaign, Feb 2021 to Jan 2023 by:
 
