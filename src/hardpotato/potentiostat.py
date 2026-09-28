@@ -1,4 +1,3 @@
-import os
 import numpy as np
 import matplotlib.pyplot as plt
 import softpotato as sp
@@ -8,6 +7,7 @@ import hardpotato.load_data as load_data
 import hardpotato.save_data as save_data
 import hardpotato.chi760f as chi760f
 import hardpotato.chi760e as chi760e
+import hardpotato.chi920d as chi920d
 import hardpotato.chi1205b as chi1205b
 import hardpotato.chi601e as chi601e
 import hardpotato.chi1242b as chi1242b
@@ -18,7 +18,7 @@ import hardpotato.pico_mscript as mscript
 import hardpotato.pico_serial as serial
 
 # Potentiostat models available: 
-models_available = ['chi1205b', 'chi1242b', 'chi601e', 'chi760f', 'chi760e', 'emstatpico']
+models_available = ['chi1205b', 'chi1242b', 'chi601e', 'chi760f', 'chi760e', 'chi920d',  'emstatpico']
 
 # Global variables
 folder_save = '.'
@@ -48,6 +48,8 @@ class Info:
             self.info = chi760f.Info()
         elif self.model == 'chi760e':
             self.info = chi760e.Info()
+        elif self.model == 'chi920d':
+            self.info = chi920d.Info()
         elif self.model == 'emstatpico':
             self.info = emstatpico.Info()
         else:
@@ -157,14 +159,46 @@ class Technique:
             sp.plotting.plot(be.t, be.Q, show=False, fig=figNum,
                              xlab='$t$ / s', ylab='$Q$ / C',
                              fileName=folder_save + '/' + self.fileName)
-        plt.close()    
+        elif self.technique == 'PAC':
+            pac = load_data.PAC(self.fileName+'.txt', folder_save, model_pstat)
+            sp.plotting.plot(pac.d, pac.i, show=False, fig=figNum,
+                             xlab='$d$ / um', ylab='$i$ / A',
+                             fileName=folder_save + '/' + self.fileName)
+        elif self.technique == 'PSC':
+            psc = load_data.PSC(self.fileName+'.txt', folder_save, model_pstat)
+            sp.plotting.plot(psc.d, psc.i, show=False, fig=figNum,
+                             xlab='$d$ / um', ylab='$i$ / A',
+                             fileName=folder_save + '/' + self.fileName)
+        elif self.technique == 'SECM':
+            secm = load_data.SECM(self.fileName+'.txt', folder_save, model_pstat)
+            x = secm.x
+            y = secm.y
+            z = secm.z[:, 0]
+            x_unique = np.unique(x)
+            y_unique = np.unique(y)
+            Z = z.reshape(len(y_unique), len(x_unique))
+
+            heatmap = plt.pcolormesh(
+                x_unique,
+                y_unique,
+                Z,
+                cmap='viridis'
+            )
+            plt.xticks(fontsize=14)
+            plt.yticks(fontsize=14)
+            plt.xlabel('$X$ / µm', fontsize=18)
+            plt.ylabel('$Y$ / µm', fontsize=18)
+            plt.tight_layout()
+            plt.colorbar(heatmap, label='$i$ / A')
+            plt.savefig(folder_save + '/' + self.fileName + '.png')
+            plt.close()
          
 
 
     def message(self, start=True):
         if start:
             print('----------\nStarting ' + self.technique)
-            if self.bpot:
+            if self.bipot:
                 print('Running in bipotentiostat mode')
         else:
             print(self.technique + ' finished\n----------\n')
@@ -216,6 +250,12 @@ class CV(Technique):
                                **kwargs)
             Technique.__init__(self, text=self.tech.text, fileName=fileName)
             self.technique = 'CV'
+        elif model_pstat == 'chi920d':
+            self.tech = chi920d.CV(Eini, Ev1, Ev2, Efin, sr, dE, nSweeps, sens,
+                               folder_save, fileName, header, path_lib,
+                               **kwargs)
+            Technique.__init__(self, text=self.tech.text, fileName=fileName)
+            self.technique = 'CV'
         elif model_pstat == 'chi1205b':
             self.tech = chi1205b.CV(Eini, Ev1, Ev2, Efin, sr, dE, nSweeps, sens,
                                folder_save, fileName, header, path_lib,
@@ -260,6 +300,11 @@ class LSV(Technique):
                                 header, path_lib, **kwargs)
             Technique.__init__(self, text=self.tech.text, fileName=fileName)
             self.technique = 'LSV'    
+        elif model_pstat == 'chi920d':
+            self.tech = chi920d.LSV(Eini, Efin, sr, dE, sens, folder_save, fileName, 
+                                header, path_lib, **kwargs)
+            Technique.__init__(self, text=self.tech.text, fileName=fileName)
+            self.technique = 'LSV'    
         elif model_pstat == 'chi1205b':
             self.tech = chi1205b.LSV(Eini, Efin, sr, dE, sens, folder_save, fileName, 
                                 header, path_lib, **kwargs)
@@ -301,6 +346,11 @@ class CA(Technique):
                                header, path_lib, **kwargs)
             Technique.__init__(self, text=self.tech.text, fileName=fileName)
             self.technique = 'CA'
+        elif model_pstat == 'chi920d':
+            self.tech = chi920d.CA(Estep, dt, ttot, sens, folder_save, fileName,
+                               header, path_lib, **kwargs)
+            Technique.__init__(self, text=self.tech.text, fileName=fileName)
+            self.technique = 'CA'
         elif model_pstat == 'chi1205b':
             self.tech = chi1205b.CA(Estep, dt, ttot, sens, folder_save, fileName,
                                header, path_lib, **kwargs)
@@ -339,6 +389,11 @@ class OCP(Technique):
             self.technique = 'OCP'
         elif model_pstat == 'chi760f':
             self.tech = chi760f.OCP(ttot, dt, folder_save, fileName, header, 
+                                    path_lib, **kwargs)
+            Technique.__init__(self, text=self.tech.text, fileName=fileName)
+            self.technique = 'OCP'
+        elif model_pstat == 'chi920d':
+            self.tech = chi920d.OCP(ttot, dt, folder_save, fileName, header, 
                                     path_lib, **kwargs)
             Technique.__init__(self, text=self.tech.text, fileName=fileName)
             self.technique = 'OCP'
@@ -431,7 +486,75 @@ class EIS(Technique):
         else:
             print('Potentiostat model ' + model_pstat + ' does not have EIS.')
 
+class SECM(Technique):
+    '''
+    '''
+    def __init__(self):
+        self.model = model_pstat
+        self.folder = folder_save
+        self.fileName = '' 
+        self.header = ''
+        self.moveText = ''
+        self.techText = ''
+        
+    def MOVE(self, motor='step', x=0, y=0, z=0):
+        self.moveText = ''
+        if self.model == 'chi920d':
+            self.moveText += chi920d.SECM.MOVE(self, motor, x, y, z)
 
+    def CV(self, Eini=-0.2, Ev1=0.2, Ev2=-0.2, Efin=-0.2, sr=0.1,
+                 dE=0.001, nSweeps=2, sens=1e-6,
+                 fileName='CV', header='CV', **kwargs):
+        self.techText = ''
+        if self.model == 'chi920d':
+            self.techText = chi920d.SECM.CV(self, Eini, Ev1, Ev2, Efin, sr, dE, nSweeps, sens, fileName, **kwargs)
+            self.technique = 'CV'
+
+    def PSC(self, E1=0.2, dir='x', dist=100, sens=1e-9, incrdist=0.05, incrtime=0.05,
+            fileName='PSC', header='PSC', **kwargs):
+        self.techText = ''
+        if self.model == 'chi920d':
+            self.techText = chi920d.SECM.PSC(self, E1, dir, dist, sens, incrdist, incrtime, fileName, **kwargs)
+            self.technique = 'PSC'
+
+    def PAC(self, E1=0.2, iratio=75, sens=1e-9, maxincr=1, withdraw=0,
+            fileName='PAC', **kwargs):
+        self.techText = ''
+        if self.model == 'chi920d':
+            self.techText = chi920d.SECM.PAC(self, E1, iratio, sens, maxincr, withdraw, fileName, **kwargs)
+            self.technique = 'PAC'
+
+    def SECM(self, secmmode='i', E1=0.1, sens=1e-9, xdist=10, ydist=10, incrdist=0.05, incrtime=0.05,
+             fileName='SECM', header='SECM', **kwargs):
+        self.techText = ''
+        if self.model == 'chi920d':
+            self.techText = chi920d.SECM.SECM(self, secmmode, E1, sens, xdist, ydist, incrdist, incrtime, fileName, **kwargs)
+            self.technique = 'SECM'
+
+    def RUN(self):
+        self.message()
+        head = 'c\x02\0\0\nfolder: ' + folder_save + '\nfileoverride\n' + \
+                    'header: ' + self.header + '\n\n'
+        body = self.moveText + self.techText
+        foot = '\n forcequit: yesiamsure\n'
+        text = head + body + foot 
+        file = open(folder_save + '/' + self.fileName + '.mcr', 'wb')
+        file.write(text.encode('ascii'))
+        file.close()
+
+        print('Running CV')
+        command = [
+         path_lib,
+         f'/runmacro:{folder_save}/{self.fileName}.mcr'
+        ]
+        subprocess.run(command)
+
+        self.moveText = '' 
+        self.techText = ''
+        self.message(start=False)
+        self.plot()
+
+    
 
 if __name__ == '__main__':
     sens = 1e-8

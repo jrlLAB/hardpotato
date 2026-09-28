@@ -3,14 +3,14 @@ import softpotato as sp
 
 # Select the potentiostat model to use:
 #model = 'chi760e'
-model = 'chi1205b'
+model = 'chi920d'
 #model = 'emstatpico'
 
 # Path to the chi software, including extension .exe. Negletected by emstatpico
-path = 'C:/Users/oliverrz/Desktop/CHI/chi1205b_mini2/chi1205b.exe'
+path = r"C:\Users\parasita\Downloads\chi920d\chi920d.exe"
 
 # Folder where to save the data, it needs to be created previously
-folder = 'C:/Users/oliverrz/Desktop/data'
+folder = r'C:\Users\parasita\OneDrive\Área de Trabalho\hardpotato\data'
 
 # Initialization:
 hp.potentiostat.Setup(model, path, folder)

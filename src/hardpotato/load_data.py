@@ -1,48 +1,72 @@
 import numpy as np
-import hardpotato.chi760e as chi
 
 
 class Test:
-    '''
-    '''
+    """ """
+
     def __init__(self):
-        print('Test from load_data module')
+        print("Test from load_data module")
+
 
 class Read:
-    '''
-    '''
+    """ """
+
     def __init__(self):
-        self.file_path = self.folder + '/' + self.fileName
+        self.file_path = self.folder + "/" + self.fileName
 
     def read(self, text=0, model=0):
-        self.delimiter = ','
-        if model[0:3] == 'chi':
+        self.delimiter = ","
+        if model == "chi920d":
             self.skiprows = self.search(text)
             if self.skiprows:
-                self.data = np.loadtxt(self.file_path, delimiter=self.delimiter, 
-                            skiprows=self.skiprows)
-                self.x = self.data[:,0]
-                self.y = -self.data[:,1:]
+                self.data = np.loadtxt(
+                    self.file_path, delimiter=self.delimiter, skiprows=self.skiprows
+                )
+                self.x = self.data[:, 0]
+                self.y = self.data[:, 1]
+                self.z = self.data[:, 2:]
             else:
-                print('Could not find string \"' + text + '\" to skip rows.' +\
-                      ' Data not loaded.')
+                print(
+                    'Could not find string "'
+                    + text
+                    + '" to skip rows.'
+                    + " Data not loaded."
+                )
                 self.x = np.array([])
                 self.y = np.array([])
-        elif model == 'emstatpico':
+                self.z = np.array([])
+        elif model[0:3] == "chi":
+            self.skiprows = self.search(text)
+            if self.skiprows:
+                self.data = np.loadtxt(
+                    self.file_path, delimiter=self.delimiter, skiprows=self.skiprows
+                )
+                self.x = self.data[:, 0]
+                self.y = self.data[:, 1:]
+            else:
+                print(
+                    'Could not find string "'
+                    + text
+                    + '" to skip rows.'
+                    + " Data not loaded."
+                )
+                self.x = np.array([])
+                self.y = np.array([])
+        elif model == "emstatpico":
             self.data = np.loadtxt(self.file_path, delimiter=self.delimiter)
-            self.t = self.data[:,0]
-            self.E = self.data[:,1]
-            self.i = self.data[:,2:]
+            self.t = self.data[:, 0]
+            self.E = self.data[:, 1]
+            self.i = self.data[:, 2:]
         else:
-            self.data = np.loadtxt(self.file_path, delimiter=self.delimiter, 
-                        skiprows=self.skiprows)
-            self.E = self.data[:,0]
-            self.i = self.data[:,1:]
+            self.data = np.loadtxt(
+                self.file_path, delimiter=self.delimiter, skiprows=self.skiprows
+            )
+            self.E = self.data[:, 0]
+            self.i = self.data[:, 1:]
 
     def search(self, text):
-        file = open(self.file_path, 'r')
+        file = open(self.file_path, "r")
         count = 0
-        flag = 0
         for line in file:
             count += 1
             if text in line:
@@ -50,12 +74,10 @@ class Read:
         return 0
 
 
-
 class XY(Read):
-    '''
-    '''
-    def __init__(self, fileName='file', folder='.', skiprows=0, delimiter=',',
-                 model=0): 
+    """ """
+
+    def __init__(self, fileName="file", folder=".", skiprows=0, delimiter=",", model=0):
         self.fileName = fileName
         self.folder = folder
         Read.__init__(self)
@@ -65,78 +87,129 @@ class XY(Read):
 
 
 class CV(Read):
-    '''
-    '''
-    def __init__(self, fileName='file', folder='.', model=0):
+    """ """
+
+    def __init__(self, fileName="file", folder=".", model=0):
         self.fileName = fileName
         self.folder = folder
-        text = 'Potential/V,'
+        text = "Potential/V,"
         Read.__init__(self)
         self.read(text, model)
-        if model[0:3] == 'chi':
+        if model[0:3] == "chi":
             self.E = self.x
             self.i = self.y
 
 
 class LSV(Read):
-    '''
-    '''
-    def __init__(self, fileName='file', folder='.', model=0):
-        cv = CV(fileName, folder, model) # Same as CV
+    """ """
+
+    def __init__(self, fileName="file", folder=".", model=0):
+        cv = CV(fileName, folder, model)  # Same as CV
         self.E = cv.E
         self.i = cv.i
 
 
 class CA(Read):
-    '''
-    '''
-    def __init__(self, fileName='file', folder='.', model=0):
+    """ """
+
+    def __init__(self, fileName="file", folder=".", model=0):
         self.fileName = fileName
         self.folder = folder
-        text = 'Time/sec,'
+        text = "Time/sec,"
         Read.__init__(self)
         self.read(text, model)
-        if model[0:3] == 'chi':
+        if model[0:3] == "chi":
             self.t = self.x
-            #self.E = self.E
+            # self.E = self.E
             self.i = self.y
 
 
 class OCP(Read):
-    '''
-    '''
-    def __init__(self, fileName='file', folder='.', model=0):
+    """ """
+
+    def __init__(self, fileName="file", folder=".", model=0):
         self.fileName = fileName
         self.folder = folder
-        text = 'Time/sec,'
+        text = "Time/sec,"
         Read.__init__(self)
         self.read(text, model)
-        if model[0:3] == 'chi':
+        if model[0:3] == "chi":
             self.t = self.x
             self.E = self.y
 
+
 class PCA(Read):
-    '''
-    '''
-    def __init__(self, fileName='file', folder='.', model=0):
+    """ """
+
+    def __init__(self, fileName="file", folder=".", model=0):
         self.fileName = fileName
         self.folder = folder
-        text = 'Time/sec,'
+        text = "Time/sec,"
         Read.__init__(self)
         self.read(text, model)
-        if model[0:3] == 'chi':
+        if model[0:3] == "chi":
             self.t = self.x
             self.i = self.y
 
+
 class BE(Read):
-    '''
-    '''
-    def __init__(self, fileName='file', folder='.', model=0):
+    """ """
+
+    def __init__(self, fileName="file", folder=".", model=0):
         self.fileName = fileName
         self.folder = folder
-        text = 'Time/sec,'
+        text = "Time/sec,"
         Read.__init__(self)
         self.read(text, model)
-        if model[0:3] == 'chi':
+        if model[0:3] == "chi":
             self.t = self.x
             self.Q = self.y[:, 0]
+
+
+class PSC(Read):
+    """ """
+
+    def __init__(self, fileName="file", folder=".", model=0):
+        self.fileName = fileName
+        self.folder = folder
+        text = "Distance/um,"
+        Read.__init__(self)
+        self.read(text, model)
+        if model == "chi920d":
+            self.d = self.x
+            self.i = self.y
+
+
+class PAC(Read):
+    """ """
+
+    def __init__(self, fileName="file", folder=".", model=0):
+        self.fileName = fileName
+        self.folder = folder
+        text = "Distance/um,"
+        Read.__init__(self)
+        self.read(text, model)
+        if model == "chi920d":
+            self.d = self.x
+            self.i = self.y
+
+
+class SECM(Read):
+    """ """
+
+    def __init__(self, fileName="file", folder=".", model=0):
+        self.fileName = fileName
+        self.folder = folder
+        text = 'X/um'
+        Read.__init__(self)
+        self.delimiter = ","
+        self.skiprows = self.search(text) + 1 # for some reason the chi software add a ' ' (space) between the header and data in SECN mode
+        if self.skiprows:
+            self.data = np.loadtxt(
+                self.file_path, delimiter=self.delimiter, skiprows=self.skiprows
+                )
+        self.x = self.data[:, 0]
+        self.y = self.data[:, 1]
+        self.z = self.data[:, 2:]
+
+

@@ -10,21 +10,31 @@ between researchers and groups that own different potentiostats.
 
 Currently, the following potentiostats are included in the library:
 
-* CHI1205B from CH Instruments (chi1205b)
-* CHI1242B from CH Instruments (chi1242b)
 * CHI601E from CH Instruments (chi601e)
 * CHI760E from CH Instruments (chi760e)
 * CHI760F from CH Instruments (chi760f)
+* CHI920D from CH Instruments (chi920d)
+* CHI1205B from CH Instruments (chi1205b)
+* CHI1242B from CH Instruments (chi1242b)
 * Emstat Pico from PalmSens (emstatpico)
 
 with the following techniques:
-* Cyclic voltammetry, CV
-* Chronoamperometry, CA
-* Linear sweep voltammetry, LSV
-* Open circuit potential, OCP
+* Cyclic voltammetry (CV)
+* Chronoamperometry (CA)
+* Linear sweep voltammetry (LSV)
+* Open circuit potential (OCP)
 
 For the CHI601E and CHI760E/F only:
-* Normal pulse voltammetry (NPV), Pulsed chronoamperometry (PCA), and bulk electrolysis (BE)
+* Normal pulse voltammetry (NPV)
+* Pulsed chronoamperometry (PCA)
+* bulk electrolysis (BE)
+
+For the CHI920D only:
+* Movement command (MOVE)
+* Scanning eletrochemical microscopy (SECM)
+* Probe scan curve (PSC)
+* Probe approach curve (PAC)
+> To enable SECM command is necessary to setup SECM, see `examples/SECM.py` and `examples/Hopping_Mode_PSC.py` for reference
 
 # Installation
 Open a console and type:
@@ -111,4 +121,6 @@ Hard Potato was developed at the [Beckman Institute](https://beckman.illinois.ed
 * PI: Joaquin Rodriguez-Lopez (joaquinr@illinois.edu)
 
 # Update
-Last updated by Zirui Wang (ziruiw2@illinois.edu), June 2026
+* June 2026, Zirui Wang (ziruiw2@illinois.edu)
+* September 2026, Takahara dos Santos (takahara.santos@usp.br)
+    * Research internship abroad (BEPE) funded by FAPESP (2026/04362-4)
